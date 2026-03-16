@@ -1,4 +1,4 @@
-name: Scalable Inference Serving APIs
+name: Scalable Inference Serving
 description: A collection of APIs for scalable machine learning model inference serving, deployment, and management
 image: https://example.com/scalable-inference-serving-logo.png
 tags:
