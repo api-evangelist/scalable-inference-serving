@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-schema/kserve-model-metadata-schema.json",
+  "title": "Model Metadata",
+  "description": "Metadata about a deployed model in an OIP-compliant inference server. Describes the model's name, available versions, serving platform, and input/output tensor specifications.",
+  "type": "object",
+  "required": ["name", "platform", "inputs", "outputs"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the model as registered in the inference server."
+    },
+    "versions": {
+      "type": "array",
+      "description": "List of available model versions. May be empty if versioning is not supported.",
+      "items": {"type": "string"}
+    },
+    "platform": {
+      "type": "string",
+      "description": "Backend serving platform and framework.",
+      "examples": [
+        "tensorflow_savedmodel",
+        "pytorch_libtorch",
+        "sklearn_sklearn",
+        "xgboost_xgboost",
+        "onnxruntime_onnx",
+        "ensemble",
+        "vllm",
+        "python"
+      ]
+    },
+    "inputs": {
+      "type": "array",
+      "description": "Input tensor specifications for the model.",
+      "items": {
+        "$ref": "#/$defs/TensorMetadata"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "description": "Output tensor specifications for the model.",
+      "items": {
+        "$ref": "#/$defs/TensorMetadata"
+      }
+    }
+  },
+  "$defs": {
+    "TensorMetadata": {
+      "type": "object",
+      "title": "Tensor Metadata",
+      "description": "Specification of a single input or output tensor.",
+      "required": ["name", "datatype", "shape"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Tensor name."
+        },
+        "datatype": {
+          "type": "string",
+          "description": "Data type (BOOL, INT32, FP32, BYTES, etc.)",
+          "enum": ["BOOL", "UINT8", "UINT16", "UINT32", "UINT64", "INT8", "INT16", "INT32", "INT64", "FP16", "FP32", "FP64", "BYTES", "STRING"]
+        },
+        "shape": {
+          "type": "array",
+          "description": "Tensor shape. -1 indicates a dynamic dimension.",
+          "items": {"type": "integer"},
+          "example": [-1, 224, 224, 3]
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Optional tensor-specific parameters."
+        }
+      }
+    }
+  }
+}

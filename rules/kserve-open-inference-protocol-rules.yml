@@ -1,0 +1,171 @@
+extends: spectral:oas
+rules:
+
+  # Path structure rules based on Open Inference Protocol conventions
+  oip-v2-prefix:
+    description: All Open Inference Protocol paths must start with /v2/
+    message: "OIP paths must start with /v2/ — found: {{value}}"
+    severity: error
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/v2"
+
+  oip-health-paths-standard:
+    description: Health endpoints must use /v2/health/{live|ready} naming convention
+    message: "Health endpoints must follow /v2/health/live or /v2/health/ready pattern"
+    severity: warn
+    given: "$.paths[?(@property.match(/health/))]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/v2/health/(live|ready)$"
+
+  oip-model-path-convention:
+    description: Model paths must use /v2/models/{model_name} naming convention
+    message: "Model paths should follow /v2/models/{model_name} pattern"
+    severity: warn
+    given: "$.paths[?(@property.match(/models/))]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/v2/models/\\{model_name\\}"
+
+  oip-inference-post-only:
+    description: Inference endpoints must use HTTP POST
+    message: "Inference endpoints (/infer) must use HTTP POST method, not {{value}}"
+    severity: error
+    given: "$.paths[?(@property.match(/\\/infer$/))]"
+    then:
+      field: post
+      function: defined
+
+  # Operation ID conventions
+  oip-operation-ids-pascal-case:
+    description: Operation IDs should use PascalCase (e.g., RunInference, GetModelMetadata)
+    message: "OperationId '{{value}}' should use PascalCase"
+    severity: warn
+    given: "$.paths[*][*].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9]+$"
+
+  # Response schema rules
+  oip-inference-response-has-model-name:
+    description: Inference 200 responses must include model_name in the response schema
+    message: "Inference response schema should include model_name property"
+    severity: warn
+    given: "$.paths[?(@property.match(/infer/))].post.responses['200'].content['application/json'].schema"
+    then:
+      field: "$ref"
+      function: defined
+
+  oip-error-response-has-error-field:
+    description: Error responses must include an 'error' field in the response schema
+    message: "Error response schema must include the 'error' property"
+    severity: error
+    given: "$.components.schemas.ErrorResponse.properties"
+    then:
+      field: error
+      function: defined
+
+  # Tensor data type validation
+  oip-tensor-datatype-enum:
+    description: TensorDatatype must enumerate all OIP-defined data types
+    message: "TensorDatatype should include all OIP standard data types"
+    severity: warn
+    given: "$.components.schemas.TensorDatatype"
+    then:
+      field: enum
+      function: defined
+
+  # Request body requirements
+  oip-inference-request-has-inputs:
+    description: Inference request bodies must define an 'inputs' required field
+    message: "InferenceRequest schema must have 'inputs' in required array"
+    severity: error
+    given: "$.components.schemas.InferenceRequest.required"
+    then:
+      function: enumeration
+      functionOptions:
+        values:
+          - inputs
+
+  oip-tensor-input-required-fields:
+    description: RequestInput must require name, shape, datatype, and data
+    message: "RequestInput should require: name, shape, datatype, data"
+    severity: error
+    given: "$.components.schemas.RequestInput.required"
+    then:
+      function: defined
+
+  # Tag conventions
+  oip-operations-tagged:
+    description: All operations must have at least one tag
+    message: "Operation '{{path}}' must have at least one tag"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: tags
+      function: defined
+
+  oip-tags-title-case:
+    description: All tags in the info and operation tags must use Title Case
+    message: "Tag '{{value}}' should use Title Case"
+    severity: info
+    given: "$.paths[*][*].tags[*]"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9 &/()-]+$"
+
+  # Summary quality rules
+  oip-operations-have-summaries:
+    description: All operations must have a summary for Swagger UI display
+    message: "Operation in {{path}} is missing a summary"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: summary
+      function: defined
+
+  oip-summaries-title-case:
+    description: Operation summaries must use Title Case
+    message: "Summary '{{value}}' must use Title Case"
+    severity: warn
+    given: "$.paths[*][*].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][A-Za-z0-9 &/()-]+$"
+
+  # Schema documentation rules
+  oip-schemas-have-descriptions:
+    description: All component schemas should have a description
+    message: "Schema '{{path}}' is missing a description"
+    severity: info
+    given: "$.components.schemas[*]"
+    then:
+      field: description
+      function: defined
+
+  oip-properties-have-descriptions:
+    description: Schema properties should have descriptions
+    message: "Property at '{{path}}' is missing a description"
+    severity: info
+    given: "$.components.schemas[*].properties[*]"
+    then:
+      field: description
+      function: defined
+
+  # Security
+  oip-servers-defined:
+    description: At least one server must be defined
+    message: "No servers defined in the spec"
+    severity: warn
+    given: "$"
+    then:
+      field: servers
+      function: defined

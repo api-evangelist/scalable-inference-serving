@@ -1,0 +1,74 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.org/",
+    "infer": "https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-ld/scalable-inference-serving-context.jsonld#",
+    "kserve": "https://kserve.github.io/ns/",
+    "oip": "https://github.com/kserve/open-inference-protocol/ns/",
+
+    "InferenceRequest": {
+      "@id": "infer:InferenceRequest",
+      "@type": "@id",
+      "comment": "An OIP V2 inference request containing input tensors submitted to a model serving endpoint."
+    },
+    "InferenceResponse": {
+      "@id": "infer:InferenceResponse",
+      "@type": "@id",
+      "comment": "The response from an OIP V2 inference request containing output tensors."
+    },
+    "ModelMetadata": {
+      "@id": "infer:ModelMetadata",
+      "@type": "@id",
+      "comment": "Metadata describing a deployed model's inputs, outputs, and platform."
+    },
+    "InferenceServer": {
+      "@id": "infer:InferenceServer",
+      "@type": "@id",
+      "comment": "An OIP-compliant server (KServe, Triton, BentoML) hosting model inference endpoints."
+    },
+    "Tensor": {
+      "@id": "infer:Tensor",
+      "@type": "@id",
+      "comment": "A multi-dimensional array of data representing a model input or output."
+    },
+    "ModelRegistry": {
+      "@id": "infer:ModelRegistry",
+      "@type": "@id",
+      "comment": "A versioned store of machine learning models and their metadata (e.g., MLflow Model Registry)."
+    },
+    "InferenceService": {
+      "@id": "kserve:InferenceService",
+      "@type": "@id",
+      "comment": "A KServe Custom Resource that deploys a model serving endpoint on Kubernetes."
+    },
+
+    "id": "@id",
+    "model_name": "schema:name",
+    "model_version": "schema:version",
+    "platform": "infer:platform",
+    "inputs": {
+      "@id": "infer:inputs",
+      "@container": "@list"
+    },
+    "outputs": {
+      "@id": "infer:outputs",
+      "@container": "@list"
+    },
+    "name": "schema:name",
+    "shape": "infer:shape",
+    "datatype": "infer:datatype",
+    "data": "infer:data",
+    "parameters": "infer:parameters",
+    "live": "infer:live",
+    "ready": "infer:ready",
+    "versions": {
+      "@id": "schema:version",
+      "@container": "@list"
+    },
+    "extensions": {
+      "@id": "infer:extensions",
+      "@container": "@list"
+    },
+    "tags": "schema:keywords"
+  }
+}

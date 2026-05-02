@@ -1,0 +1,54 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://inference.kserve.example.com/v2/models/bert-sentiment-classifier/infer",
+    "headers": {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    "body": {
+      "id": "req-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "inputs": [
+        {
+          "name": "text_input",
+          "shape": [1, 128],
+          "datatype": "INT32",
+          "data": [
+            [101, 2023, 2003, 1037, 2307, 3185, 999, 102, 0, 0, 0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+          ]
+        }
+      ],
+      "outputs": [
+        {"name": "sentiment_label"},
+        {"name": "confidence_score"}
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "model_name": "bert-sentiment-classifier",
+      "model_version": "3",
+      "id": "req-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "outputs": [
+        {
+          "name": "sentiment_label",
+          "shape": [1],
+          "datatype": "BYTES",
+          "data": ["positive"]
+        },
+        {
+          "name": "confidence_score",
+          "shape": [1],
+          "datatype": "FP32",
+          "data": [0.9423]
+        }
+      ]
+    }
+  }
+}

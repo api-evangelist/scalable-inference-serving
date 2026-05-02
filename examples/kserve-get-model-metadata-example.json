@@ -1,0 +1,31 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://inference.kserve.example.com/v2/models/resnet50-image-classifier",
+    "headers": {
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "name": "resnet50-image-classifier",
+      "versions": ["1", "2", "3"],
+      "platform": "tensorflow_savedmodel",
+      "inputs": [
+        {
+          "name": "input_image",
+          "datatype": "FP32",
+          "shape": [-1, 224, 224, 3]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "class_probabilities",
+          "datatype": "FP32",
+          "shape": [-1, 1000]
+        }
+      ]
+    }
+  }
+}

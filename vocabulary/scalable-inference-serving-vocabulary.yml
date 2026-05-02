@@ -1,0 +1,284 @@
+name: Scalable Inference Serving Vocabulary
+description: >-
+  Normative vocabulary for the scalable ML model inference serving domain,
+  covering model deployment, inference protocols, serving frameworks, hardware
+  acceleration, batching strategies, and the operational concepts of modern
+  MLOps and LLMOps workflows.
+created: '2026-05-02'
+modified: '2026-05-02'
+tags:
+  - AI
+  - CNCF
+  - Inference
+  - Machine Learning
+  - Model Serving
+  - MLOps
+
+terms:
+
+  - term: Open Inference Protocol
+    definition: >-
+      A standardized REST and gRPC interface for model inference, also known as
+      the KServe V2 Inference Protocol. Implemented by KServe, NVIDIA Triton,
+      BentoML, TorchServe, and OpenVINO Model Server. Defines health, metadata,
+      and inference endpoints for cross-framework interoperability.
+    acronym: OIP
+    fullName: Open Inference Protocol
+    synonyms:
+      - KServe V2 Protocol
+      - V2 Inference Protocol
+    related:
+      - KServe
+      - NVIDIA Triton
+      - InferenceService
+
+  - term: KServe
+    definition: >-
+      A standardized distributed generative and predictive AI inference platform
+      for scalable, multi-framework deployment on Kubernetes. Manages InferenceService
+      custom resources, autoscaling, canary rollouts, model pipelines, and
+      explainability. CNCF incubating project since November 2025.
+    related:
+      - Open Inference Protocol
+      - InferenceService
+      - Kubernetes
+
+  - term: InferenceService
+    definition: >-
+      A KServe Custom Resource Definition (CRD) that defines and manages the full
+      lifecycle of a model serving deployment on Kubernetes, including the predictor,
+      transformer, explainer components, autoscaling, and routing configuration.
+    related:
+      - KServe
+      - Custom Resource Definition
+
+  - term: Tensor
+    definition: >-
+      A multi-dimensional array of numeric data. The fundamental unit of data
+      exchange in ML inference systems. Tensors have a name, shape (dimensions),
+      datatype, and data payload. The Open Inference Protocol uses tensors for
+      all input and output data.
+    related:
+      - Tensor Shape
+      - Tensor Datatype
+      - Batch Inference
+
+  - term: Tensor Shape
+    definition: >-
+      The dimensions of a tensor expressed as an array of integers. For example,
+      [batch_size, sequence_length] = [1, 128] for a BERT input. Dynamic dimensions
+      are represented as -1.
+    related:
+      - Tensor
+      - Batch Size
+
+  - term: Batch Inference
+    definition: >-
+      Processing multiple inference requests simultaneously in a single forward
+      pass through the model. Dramatically improves throughput and hardware
+      utilization. The batch dimension is typically the first tensor dimension.
+    synonyms:
+      - Batching
+    related:
+      - Tensor
+      - Adaptive Batching
+      - Throughput
+
+  - term: Adaptive Batching
+    definition: >-
+      Dynamically grouping concurrent inference requests into a batch based on
+      latency and throughput targets. If requests arrive within a configurable
+      window, they are batched together. BentoML Runner implements adaptive
+      batching with configurable max_latency and max_batch_size parameters.
+    related:
+      - Batch Inference
+      - BentoML
+
+  - term: BentoML
+    definition: >-
+      An open-source unified ML model serving framework. BentoML wraps model loading,
+      custom pre/post-processing, and REST/gRPC API generation into a deployable
+      artifact called a Bento. The Runner abstraction parallelizes inference with
+      adaptive batching. Integrates with KServe for Kubernetes deployment.
+    related:
+      - Bento
+      - Runner
+      - KServe
+
+  - term: Bento
+    definition: >-
+      A BentoML deployment artifact that bundles the model, service code, dependencies,
+      and runtime configuration into an immutable, versioned unit that can be deployed
+      as a Docker container or pushed to BentoCloud.
+    related:
+      - BentoML
+      - Container Image
+
+  - term: vLLM
+    definition: >-
+      A high-throughput and memory-efficient inference engine for Large Language
+      Models, implementing PagedAttention for efficient GPU KV cache management.
+      Exposes an OpenAI-compatible REST API. In 2026, vLLM integrates with KServe
+      via LLMInferenceService and llm-d for distributed LLM inference.
+    related:
+      - PagedAttention
+      - LLMInferenceService
+      - KServe
+
+  - term: PagedAttention
+    definition: >-
+      A memory management algorithm in vLLM that manages the GPU KV cache
+      in non-contiguous paged blocks (similar to OS virtual memory paging),
+      dramatically reducing memory waste and enabling higher throughput and
+      longer context windows.
+    related:
+      - vLLM
+      - KV Cache
+
+  - term: KV Cache
+    definition: >-
+      Key-Value Cache. Stores the attention key and value tensors from previously
+      processed tokens to avoid recomputing them in autoregressive LLM generation.
+      The primary memory bottleneck in LLM serving; managed efficiently by vLLM's
+      PagedAttention.
+    related:
+      - PagedAttention
+      - LLM
+
+  - term: LLMInferenceService
+    definition: >-
+      A KServe CRD introduced in v0.16 designed specifically for Large Language
+      Model workloads. Integrates with llm-d and vLLM for production-grade
+      distributed LLM inference with KV cache offloading and multi-GPU support.
+    related:
+      - KServe
+      - vLLM
+      - llm-d
+
+  - term: NVIDIA Triton Inference Server
+    definition: >-
+      NVIDIA's open-source inference serving software that implements the Open
+      Inference Protocol. Supports TensorRT, ONNX, TensorFlow SavedModel,
+      PyTorch TorchScript, and Python backends. Provides dynamic batching,
+      model ensembles, and GPU/CPU concurrent model execution.
+    related:
+      - Open Inference Protocol
+      - TensorRT
+      - Dynamic Batching
+
+  - term: TensorRT
+    definition: >-
+      NVIDIA's SDK for high-performance deep learning inference. Optimizes trained
+      models by fusing layers, quantizing precision (FP16, INT8), and generating
+      CUDA kernels tailored to specific GPU hardware. Used with Triton for maximum
+      GPU inference throughput.
+    related:
+      - NVIDIA Triton Inference Server
+      - Quantization
+
+  - term: Dynamic Batching
+    definition: >-
+      A Triton Inference Server feature that forms batches from multiple inference
+      requests on the fly without requiring the client to batch requests. The server
+      collects requests within a configurable queue delay and batches them together.
+    related:
+      - NVIDIA Triton Inference Server
+      - Batch Inference
+
+  - term: MLflow
+    definition: >-
+      An open-source platform for the complete ML lifecycle, including experiment
+      tracking, reproducibility, model packaging, and deployment. The MLflow Model
+      Registry provides model versioning, stage transitions (Staging, Production),
+      and annotations. Used with KServe for model lifecycle management.
+    related:
+      - Model Registry
+      - Experiment Tracking
+
+  - term: Model Registry
+    definition: >-
+      A centralized store for tracking trained model versions, their metadata,
+      training parameters, evaluation metrics, and deployment artifacts. Enables
+      governance and reproducibility in ML pipelines. MLflow, W&B, and Vertex AI
+      all provide model registry capabilities.
+    related:
+      - MLflow
+      - Model Versioning
+
+  - term: Ray Serve
+    definition: >-
+      A scalable model serving library built on Ray. Enables composable deployments
+      where multiple models or processing stages are chained together. Supports HTTP
+      ingress, autoscaling, request batching, and gRPC. Suitable for complex multi-model
+      pipelines and heterogeneous ML workloads.
+    related:
+      - Ray
+      - Model Pipeline
+
+  - term: Canary Rollout
+    definition: >-
+      A deployment strategy for inference services where a new model version
+      receives a fraction of traffic while the old version handles the rest.
+      KServe supports canary rollouts via the InferenceService canaryTrafficPercent
+      field. Allows gradual validation of new model versions in production.
+    related:
+      - InferenceService
+      - A/B Testing
+
+  - term: Model Pipeline
+    definition: >-
+      A sequence of processing steps (preprocessing, inference, postprocessing,
+      ensemble) composed into a single serving endpoint. KServe supports pipelines
+      via the pipeline InferenceService component.
+    related:
+      - InferenceService
+      - Ray Serve
+
+  - term: Quantization
+    definition: >-
+      Reducing the precision of model weights and activations (e.g., FP32 to INT8
+      or FP16) to reduce model size and increase inference throughput. Commonly used
+      with TensorRT, ONNX Runtime, and vLLM AWQ/GPTQ for LLMs.
+    related:
+      - TensorRT
+      - vLLM
+
+categories:
+  - name: Inference Protocols
+    terms:
+      - Open Inference Protocol
+      - Tensor
+      - Tensor Shape
+
+  - name: Serving Frameworks
+    terms:
+      - KServe
+      - BentoML
+      - vLLM
+      - NVIDIA Triton Inference Server
+      - Ray Serve
+
+  - name: LLM Serving
+    terms:
+      - PagedAttention
+      - KV Cache
+      - LLMInferenceService
+      - Quantization
+
+  - name: Batching
+    terms:
+      - Batch Inference
+      - Adaptive Batching
+      - Dynamic Batching
+
+  - name: Model Lifecycle
+    terms:
+      - Model Registry
+      - MLflow
+      - Canary Rollout
+      - Model Pipeline
+
+  - name: Kubernetes Resources
+    terms:
+      - InferenceService
+      - Custom Resource Definition

@@ -1,0 +1,694 @@
+openapi: "3.1.0"
+info:
+  title: KServe Open Inference Protocol API
+  description: >-
+    The Open Inference Protocol (OIP), also known as the KServe V2 Inference Protocol,
+    provides a standardized REST interface for model inference across ML serving
+    frameworks. Implemented by KServe (CNCF incubating), NVIDIA Triton Inference
+    Server, BentoML, TorchServe, and OpenVINO Model Server.
+
+    The protocol defines health, metadata, and inference endpoints for both the
+    server and individual models. An HTTP POST to the inference endpoint submits
+    an inference request; GET endpoints retrieve health and metadata.
+
+    KServe is a standardized distributed generative and predictive AI inference
+    platform for scalable, multi-framework deployment on Kubernetes.
+  version: "v2"
+  contact:
+    name: KServe Community
+    url: https://github.com/kserve/kserve
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  externalDocs:
+    description: KServe Open Inference Protocol Documentation
+    url: https://kserve.github.io/website/docs/concepts/architecture/data-plane/v2-protocol
+
+servers:
+  - url: https://inference.kserve.example.com
+    description: KServe InferenceService endpoint
+
+tags:
+  - name: Health
+    description: Server and model liveness and readiness probes
+  - name: Metadata
+    description: Server and model metadata endpoints
+  - name: Inference
+    description: Model inference request endpoints
+  - name: Models
+    description: Model management and metadata operations
+
+paths:
+  /v2/health/live:
+    get:
+      operationId: CheckServerLiveness
+      summary: Check Server Liveness
+      description: >-
+        The server liveness API indicates if the inference server is able to
+        receive and respond to metadata and inference requests. Can be used
+        directly to implement the Kubernetes livenessProbe.
+      tags:
+        - Health
+      responses:
+        '200':
+          description: Server is live and ready to receive requests.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerLiveResponse'
+              example:
+                live: true
+        '503':
+          description: Server is not live.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v2/health/ready:
+    get:
+      operationId: CheckServerReadiness
+      summary: Check Server Readiness
+      description: >-
+        The server readiness API indicates if all the models are ready for
+        inferencing. Can be used directly to implement the Kubernetes
+        readinessProbe.
+      tags:
+        - Health
+      responses:
+        '200':
+          description: Server is ready; all models are loaded and ready for inference.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerReadyResponse'
+              example:
+                ready: true
+        '503':
+          description: Server is not ready (models loading or failed).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v2/models/{model_name}/ready:
+    get:
+      operationId: CheckModelReadiness
+      summary: Check Model Readiness
+      description: >-
+        The model readiness API indicates if a specific model is ready for
+        inferencing. Check this before submitting inference requests to a
+        newly deployed model.
+      tags:
+        - Health
+        - Models
+      parameters:
+        - name: model_name
+          in: path
+          required: true
+          description: Name of the model to check readiness for.
+          schema:
+            type: string
+          example: bert-sentiment-classifier
+      responses:
+        '200':
+          description: Model is ready for inference.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelReadyResponse'
+              example:
+                name: bert-sentiment-classifier
+                ready: true
+        '404':
+          description: Model not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Model not ready.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v2/models/{model_name}/versions/{model_version}/ready:
+    get:
+      operationId: CheckModelVersionReadiness
+      summary: Check Model Version Readiness
+      description: >-
+        Check if a specific version of a model is ready for inference.
+      tags:
+        - Health
+        - Models
+      parameters:
+        - name: model_name
+          in: path
+          required: true
+          schema:
+            type: string
+          example: bert-sentiment-classifier
+        - name: model_version
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "2"
+      responses:
+        '200':
+          description: Model version is ready.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelReadyResponse'
+        '404':
+          description: Model version not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v2:
+    get:
+      operationId: GetServerMetadata
+      summary: Get Server Metadata
+      description: >-
+        Returns metadata about the inference server, including its name,
+        version, and the extensions it supports.
+      tags:
+        - Metadata
+      responses:
+        '200':
+          description: Server metadata returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerMetadataResponse'
+              example:
+                name: triton
+                version: "2.30.0"
+                extensions:
+                  - binary_tensor_data
+                  - classification
+                  - sequence
+                  - model_configuration
+
+  /v2/models/{model_name}:
+    get:
+      operationId: GetModelMetadata
+      summary: Get Model Metadata
+      description: >-
+        Returns metadata about a model, including its name, versions, platform,
+        inputs, and outputs. Use this to discover the input/output tensor shapes
+        and data types before submitting inference requests.
+      tags:
+        - Metadata
+        - Models
+      parameters:
+        - name: model_name
+          in: path
+          required: true
+          description: Name of the model.
+          schema:
+            type: string
+          example: resnet50-image-classifier
+      responses:
+        '200':
+          description: Model metadata returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelMetadataResponse'
+              example:
+                name: resnet50-image-classifier
+                versions:
+                  - "1"
+                  - "2"
+                platform: tensorflow_savedmodel
+                inputs:
+                  - name: input_image
+                    datatype: FP32
+                    shape: [-1, 224, 224, 3]
+                outputs:
+                  - name: class_probabilities
+                    datatype: FP32
+                    shape: [-1, 1000]
+        '404':
+          description: Model not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v2/models/{model_name}/versions/{model_version}:
+    get:
+      operationId: GetModelVersionMetadata
+      summary: Get Model Version Metadata
+      description: >-
+        Returns metadata for a specific version of a model.
+      tags:
+        - Metadata
+        - Models
+      parameters:
+        - name: model_name
+          in: path
+          required: true
+          schema:
+            type: string
+          example: resnet50-image-classifier
+        - name: model_version
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "2"
+      responses:
+        '200':
+          description: Model version metadata returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelMetadataResponse'
+        '404':
+          description: Model version not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v2/models/{model_name}/infer:
+    post:
+      operationId: RunInference
+      summary: Run Model Inference
+      description: >-
+        Submit an inference request to a model. The request body contains the
+        input tensors as JSON. Inputs are specified as an array of named tensors
+        with shape, datatype, and data fields. The response contains the model's
+        output tensors.
+
+        For large tensor payloads, the binary tensor data extension allows
+        sending tensor data as binary in the request body alongside the JSON
+        header.
+      tags:
+        - Inference
+      parameters:
+        - name: model_name
+          in: path
+          required: true
+          description: Name of the model to run inference against.
+          schema:
+            type: string
+          example: bert-sentiment-classifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InferenceRequest'
+            example:
+              id: "req-12345"
+              inputs:
+                - name: text_input
+                  shape: [1, 128]
+                  datatype: INT32
+                  data: [[101, 2023, 2003, 1037, 3231, 102, 0, 0]]
+              outputs:
+                - name: sentiment_label
+                - name: confidence_score
+      responses:
+        '200':
+          description: Inference completed successfully. Returns output tensors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InferenceResponse'
+              example:
+                model_name: bert-sentiment-classifier
+                model_version: "3"
+                id: "req-12345"
+                outputs:
+                  - name: sentiment_label
+                    shape: [1]
+                    datatype: BYTES
+                    data: ["positive"]
+                  - name: confidence_score
+                    shape: [1]
+                    datatype: FP32
+                    data: [0.9423]
+        '400':
+          description: Invalid inference request (bad input shape, unsupported datatype, etc.)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Model not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Model not ready or server overloaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /v2/models/{model_name}/versions/{model_version}/infer:
+    post:
+      operationId: RunModelVersionInference
+      summary: Run Model Version Inference
+      description: >-
+        Submit an inference request to a specific version of a model. Useful
+        for A/B testing, canary rollouts, and version-pinned integrations.
+      tags:
+        - Inference
+      parameters:
+        - name: model_name
+          in: path
+          required: true
+          schema:
+            type: string
+          example: resnet50-image-classifier
+        - name: model_version
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "2"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InferenceRequest'
+      responses:
+        '200':
+          description: Inference completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InferenceResponse'
+        '400':
+          description: Invalid inference request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Model or model version not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    ServerLiveResponse:
+      type: object
+      description: Response from the server liveness endpoint.
+      required:
+        - live
+      properties:
+        live:
+          type: boolean
+          description: Indicates if the server is live.
+
+    ServerReadyResponse:
+      type: object
+      description: Response from the server readiness endpoint.
+      required:
+        - ready
+      properties:
+        ready:
+          type: boolean
+          description: Indicates if the server is ready for inference.
+
+    ModelReadyResponse:
+      type: object
+      description: Response from the model readiness endpoint.
+      required:
+        - name
+        - ready
+      properties:
+        name:
+          type: string
+          description: Name of the model.
+        ready:
+          type: boolean
+          description: Indicates if the model is ready for inference.
+
+    ServerMetadataResponse:
+      type: object
+      description: Server metadata including name, version, and supported extensions.
+      required:
+        - name
+        - version
+        - extensions
+      properties:
+        name:
+          type: string
+          description: Server implementation name (e.g., triton, kserve, bentoml).
+          example: triton
+        version:
+          type: string
+          description: Server version string.
+          example: "2.30.0"
+        extensions:
+          type: array
+          description: List of protocol extensions supported by the server.
+          items:
+            type: string
+          example:
+            - binary_tensor_data
+            - classification
+
+    ModelMetadataResponse:
+      type: object
+      description: >-
+        Metadata about a model, including its versions, platform,
+        and input/output tensor specifications.
+      required:
+        - name
+        - platform
+        - inputs
+        - outputs
+      properties:
+        name:
+          type: string
+          description: Model name.
+        versions:
+          type: array
+          items:
+            type: string
+          description: Available model versions.
+        platform:
+          type: string
+          description: >-
+            Backend platform (e.g., tensorflow_savedmodel, pytorch_libtorch,
+            sklearn_sklearn, xgboost_xgboost, onnxruntime_onnx).
+          examples:
+            - tensorflow_savedmodel
+            - pytorch_libtorch
+            - sklearn_sklearn
+            - onnxruntime_onnx
+            - ensemble
+        inputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/TensorMetadata'
+        outputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/TensorMetadata'
+
+    TensorMetadata:
+      type: object
+      description: Metadata describing a single input or output tensor.
+      required:
+        - name
+        - datatype
+        - shape
+      properties:
+        name:
+          type: string
+          description: Name of the tensor as defined by the model.
+        datatype:
+          $ref: '#/components/schemas/TensorDatatype'
+        shape:
+          type: array
+          description: >-
+            Shape of the tensor. Use -1 for dynamic dimensions.
+          items:
+            type: integer
+          example: [-1, 224, 224, 3]
+        parameters:
+          type: object
+          additionalProperties: true
+          description: Optional tensor-specific parameters.
+
+    InferenceRequest:
+      type: object
+      description: >-
+        Request body for submitting model inference. Contains input tensors
+        and optionally specifies which outputs to return.
+      required:
+        - inputs
+      properties:
+        id:
+          type: string
+          description: >-
+            Optional request identifier. If provided, it is echoed back in
+            the response for correlation.
+          example: "req-a1b2c3d4"
+        parameters:
+          type: object
+          additionalProperties: true
+          description: Optional key/value parameters passed to the model.
+        inputs:
+          type: array
+          description: Input tensors for the inference request.
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/RequestInput'
+        outputs:
+          type: array
+          description: >-
+            Optional list of output tensors to return. If omitted,
+            all outputs are returned.
+          items:
+            $ref: '#/components/schemas/RequestOutput'
+
+    RequestInput:
+      type: object
+      description: A single input tensor for an inference request.
+      required:
+        - name
+        - shape
+        - datatype
+        - data
+      properties:
+        name:
+          type: string
+          description: Name of the input tensor (must match the model's input name).
+        shape:
+          type: array
+          items:
+            type: integer
+          description: Shape of the input tensor.
+          example: [1, 128]
+        datatype:
+          $ref: '#/components/schemas/TensorDatatype'
+        parameters:
+          type: object
+          additionalProperties: true
+        data:
+          description: >-
+            Tensor data in row-major order. Can be a flat array or nested
+            arrays matching the tensor shape. Data type must match the
+            declared datatype.
+          oneOf:
+            - type: array
+              items: {}
+            - type: string
+
+    RequestOutput:
+      type: object
+      description: Specifies which output tensor to include in the response.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Name of the output tensor to include.
+        parameters:
+          type: object
+          additionalProperties: true
+
+    InferenceResponse:
+      type: object
+      description: Response from a successful model inference request.
+      required:
+        - model_name
+        - outputs
+      properties:
+        model_name:
+          type: string
+          description: Name of the model that produced the response.
+        model_version:
+          type: string
+          description: Version of the model that produced the response.
+        id:
+          type: string
+          description: >-
+            Request ID echoed from the inference request for correlation.
+        parameters:
+          type: object
+          additionalProperties: true
+        outputs:
+          type: array
+          description: Output tensors from the inference.
+          items:
+            $ref: '#/components/schemas/ResponseOutput'
+
+    ResponseOutput:
+      type: object
+      description: A single output tensor in the inference response.
+      required:
+        - name
+        - shape
+        - datatype
+        - data
+      properties:
+        name:
+          type: string
+          description: Name of the output tensor.
+        shape:
+          type: array
+          items:
+            type: integer
+          description: Shape of the output tensor.
+        datatype:
+          $ref: '#/components/schemas/TensorDatatype'
+        parameters:
+          type: object
+          additionalProperties: true
+        data:
+          description: Output tensor data in row-major order.
+          oneOf:
+            - type: array
+              items: {}
+            - type: string
+
+    TensorDatatype:
+      type: string
+      description: >-
+        Data type of a tensor. Follows the Open Inference Protocol datatype
+        naming convention.
+      enum:
+        - BOOL
+        - UINT8
+        - UINT16
+        - UINT32
+        - UINT64
+        - INT8
+        - INT16
+        - INT32
+        - INT64
+        - FP16
+        - FP32
+        - FP64
+        - BYTES
+        - STRING
+
+    ErrorResponse:
+      type: object
+      description: Error response returned when an inference or metadata request fails.
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message describing why the request failed.
+          example: "model not found: bert-sentiment-classifier"

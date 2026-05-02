@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-schema/kserve-inference-request-schema.json",
+  "title": "Inference Request",
+  "description": "Open Inference Protocol V2 inference request submitted to a model serving endpoint via HTTP POST. Compatible with KServe, NVIDIA Triton, BentoML, and other OIP-compliant servers.",
+  "type": "object",
+  "required": ["inputs"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Optional request identifier that will be echoed back in the response for correlation.",
+      "example": "req-a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Optional key/value parameters passed to the model's pre/post-processing pipeline.",
+      "additionalProperties": true
+    },
+    "inputs": {
+      "type": "array",
+      "description": "Input tensors for the inference request. Each tensor specifies its name, shape, datatype, and data.",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/RequestInput"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "description": "Optional list of output tensors to return. If omitted, all model outputs are returned.",
+      "items": {
+        "$ref": "#/$defs/RequestOutput"
+      }
+    }
+  },
+  "$defs": {
+    "RequestInput": {
+      "type": "object",
+      "title": "Request Input",
+      "description": "A single named input tensor for an inference request.",
+      "required": ["name", "shape", "datatype", "data"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Tensor name as defined in the model's input specification."
+        },
+        "shape": {
+          "type": "array",
+          "description": "Shape of the tensor. Use -1 for variable-length or batch dimensions.",
+          "items": {"type": "integer"},
+          "example": [1, 128]
+        },
+        "datatype": {
+          "$ref": "#/$defs/TensorDatatype"
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Optional tensor-level parameters."
+        },
+        "data": {
+          "description": "Tensor data in row-major order. Nested arrays or flat array acceptable.",
+          "oneOf": [
+            {"type": "array", "items": {}},
+            {"type": "string", "description": "Base64-encoded binary data for the binary tensor data extension."}
+          ]
+        }
+      }
+    },
+    "RequestOutput": {
+      "type": "object",
+      "title": "Request Output",
+      "description": "Specifies which model output tensor to include in the response.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the output tensor to include in the response."
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "TensorDatatype": {
+      "type": "string",
+      "title": "Tensor Datatype",
+      "description": "Data type of a tensor per the Open Inference Protocol specification.",
+      "enum": ["BOOL", "UINT8", "UINT16", "UINT32", "UINT64", "INT8", "INT16", "INT32", "INT64", "FP16", "FP32", "FP64", "BYTES", "STRING"]
+    }
+  }
+}

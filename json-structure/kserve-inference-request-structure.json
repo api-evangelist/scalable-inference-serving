@@ -1,0 +1,37 @@
+{
+  "name": "Inference Request",
+  "description": "Hierarchical field structure for an Open Inference Protocol V2 inference request, as used by KServe, NVIDIA Triton, BentoML, and other OIP-compliant inference servers.",
+  "fields": [
+    {"name": "id", "type": "string", "description": "Optional request correlation ID echoed in the response.", "required": false},
+    {"name": "parameters", "type": "object", "description": "Optional key-value parameters for model pre/post-processing.", "required": false},
+    {
+      "name": "inputs",
+      "type": "array",
+      "description": "Input tensors for the inference request.",
+      "required": true,
+      "items": {
+        "name": "RequestInput",
+        "fields": [
+          {"name": "name", "type": "string", "description": "Tensor name matching the model's input specification.", "required": true},
+          {"name": "shape", "type": "array", "description": "Tensor shape (use -1 for dynamic dimensions).", "required": true},
+          {"name": "datatype", "type": "string", "description": "OIP datatype: BOOL, INT32, INT64, FP32, FP64, BYTES, STRING, etc.", "required": true},
+          {"name": "data", "type": "array|string", "description": "Tensor data in row-major order. Nested arrays or base64 binary.", "required": true},
+          {"name": "parameters", "type": "object", "description": "Optional tensor-level parameters.", "required": false}
+        ]
+      }
+    },
+    {
+      "name": "outputs",
+      "type": "array",
+      "description": "Optional list of outputs to return (all returned if omitted).",
+      "required": false,
+      "items": {
+        "name": "RequestOutput",
+        "fields": [
+          {"name": "name", "type": "string", "description": "Name of the output tensor to include.", "required": true},
+          {"name": "parameters", "type": "object", "description": "Optional output parameters.", "required": false}
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://inference.kserve.example.com/v2/health/live",
+    "headers": {}
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "live": true
+    }
+  }
+}
