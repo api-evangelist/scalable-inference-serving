@@ -238,6 +238,20 @@ common:
     url: https://landscape.cncf.io/card-mode?project=incubating
   - type: Blog
     url: https://kserve.github.io/website/blog/
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/openapi/kserve-open-inference-protocol-openapi.yml
+  - type: SpectralRuleset
+    url: https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/rules/kserve-open-inference-protocol-rules.yml
+  - type: NaftikoCapability
+    url: https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/capabilities/model-inference-operations.yaml
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-schema/kserve-inference-request-schema.json
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-schema/kserve-model-metadata-schema.json
+  - type: JSONLd
+    url: https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-ld/scalable-inference-serving-context.jsonld
+  - type: Vocabulary
+    url: https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/vocabulary/scalable-inference-serving-vocabulary.yml
 
 maintainers:
   - name: API Evangelist

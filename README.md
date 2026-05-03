@@ -125,13 +125,13 @@ Autoscaling, Inference, Machine Learning, Model Serving, Open Source, Python, Ra
 
 | Artifact | Description |
 |---|---|
-| [KServe Open Inference Protocol](capabilities/shared/kserve-open-inference-protocol.yaml) | Shared per-API capability definition with full consumes/exposes structure for all 7 OIP operations. |
+| [KServe Open Inference Protocol](capabilities/shared/kserve-open-inference-protocol.yaml) | Shared per-API capability definition with full consumes/exposes structure for all 7 OIP operations across server health, metadata, and inference endpoints. |
 
 ### Workflow Capabilities
 
 | Artifact | Description |
 |---|---|
-| [Model Inference Operations](capabilities/model-inference-operations.yaml) | Unified REST and MCP workflow capability for ML engineers to run inference, monitor health, and inspect model metadata. 8 tools. |
+| [Model Inference Operations](capabilities/model-inference-operations.yaml) | Unified REST and MCP workflow capability for ML engineers to run inference, monitor health, and inspect model metadata. Exposes 8 tools via REST (port 8080) and MCP (port 9090). |
 
 ## Schemas
 
