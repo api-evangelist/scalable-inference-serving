@@ -1,0 +1,13 @@
+{
+  "repo": "scalable-inference-serving",
+  "feeds": [
+    {
+      "source": "https://kserve.github.io/website/blog/",
+      "feed_url": "https://kserve.github.io/website/blog/rss",
+      "saved": 10,
+      "title": "KServe Blog"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:35:37Z"
+}
