@@ -1,233 +1,337 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Scalable Inference Serving - Model Inference Operations"
-  description: >-
-    Workflow capability for ML engineers and data scientists performing model inference
-    operations, health monitoring, and metadata inspection against OIP-compliant
-    inference servers. Imports the KServe Open Inference Protocol shared definition
-    and exposes a unified workflow-oriented API and MCP server for AI-assisted
-    inference workflows.
+  label: Scalable Inference Serving - Model Inference Operations
+  description: Workflow capability for ML engineers and data scientists performing model inference operations, health monitoring,
+    and metadata inspection against OIP-compliant inference servers. Imports the KServe Open Inference Protocol shared definition
+    and exposes a unified workflow-oriented API and MCP server for AI-assisted inference workflows.
   tags:
-    - AI
-    - CNCF
-    - Inference
-    - Kubernetes
-    - Machine Learning
-    - Model Serving
-    - MLOps
-  created: "2026-05-02"
-  modified: "2026-05-02"
-
+  - AI
+  - CNCF
+  - Inference
+  - Kubernetes
+  - Machine Learning
+  - Model Serving
+  - MLOps
+  created: '2026-05-02'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      KSERVE_BASE_URL: KSERVE_BASE_URL
-
+- namespace: env
+  keys:
+    KSERVE_BASE_URL: KSERVE_BASE_URL
 capability:
   consumes:
-    - import: kserve
-      location: ./shared/kserve-open-inference-protocol.yaml
-
+  - type: http
+    namespace: kserve
+    baseUri: '{{env.KSERVE_BASE_URL}}'
+    description: KServe Open Inference Protocol V2 REST API
+    resources:
+    - name: server-health
+      path: /v2/health
+      description: Server liveness and readiness health endpoints
+      operations:
+      - name: check-server-liveness
+        method: GET
+        description: Check if the inference server is live and ready to receive requests
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: check-server-readiness
+        method: GET
+        description: Check if all models are loaded and the server is ready for inference
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: server-metadata
+      path: /v2
+      description: Server metadata and version information
+      operations:
+      - name: get-server-metadata
+        method: GET
+        description: Get server name, version, and supported protocol extensions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: model-health
+      path: /v2/models/{model_name}/ready
+      description: Per-model readiness endpoint
+      operations:
+      - name: check-model-readiness
+        method: GET
+        description: Check if a specific model is ready for inference
+        inputParameters:
+        - name: model_name
+          in: path
+          type: string
+          required: true
+          description: Name of the model to check
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: model-metadata
+      path: /v2/models/{model_name}
+      description: Model metadata including input/output tensor specifications
+      operations:
+      - name: get-model-metadata
+        method: GET
+        description: Retrieve model name, versions, platform, and input/output tensor specs
+        inputParameters:
+        - name: model_name
+          in: path
+          type: string
+          required: true
+          description: Name of the model
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: model-inference
+      path: /v2/models/{model_name}/infer
+      description: Model inference execution endpoint
+      operations:
+      - name: run-inference
+        method: POST
+        description: Submit input tensors and receive model predictions
+        inputParameters:
+        - name: model_name
+          in: path
+          type: string
+          required: true
+          description: Name of the model to run inference against
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            id: '{{tools.request_id}}'
+            inputs: '{{tools.inputs}}'
+            outputs: '{{tools.outputs}}'
+    - name: model-version-inference
+      path: /v2/models/{model_name}/versions/{model_version}/infer
+      description: Version-specific model inference
+      operations:
+      - name: run-model-version-inference
+        method: POST
+        description: Submit inference request to a specific model version for A/B testing or version pinning
+        inputParameters:
+        - name: model_name
+          in: path
+          type: string
+          required: true
+          description: Name of the model
+        - name: model_version
+          in: path
+          type: string
+          required: true
+          description: Specific model version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            id: '{{tools.request_id}}'
+            inputs: '{{tools.inputs}}'
   exposes:
-    - type: rest
-      port: 8080
-      namespace: inference-ops-api
-      description: "Unified REST API for model inference operations, health monitoring, and metadata inspection."
-      resources:
-        - path: /v1/health/live
-          name: server-liveness
-          description: "Check if the inference server is live"
-          operations:
-            - method: GET
-              name: check-server-liveness
-              description: "Check Server Liveness"
-              call: "kserve.check-server-liveness"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/health/ready
-          name: server-readiness
-          description: "Check if all models are ready for inference"
-          operations:
-            - method: GET
-              name: check-server-readiness
-              description: "Check Server Readiness"
-              call: "kserve.check-server-readiness"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/server
-          name: server-metadata
-          description: "Inference server metadata and capabilities"
-          operations:
-            - method: GET
-              name: get-server-metadata
-              description: "Get Server Metadata"
-              call: "kserve.get-server-metadata"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/models/{model_name}
-          name: model-metadata
-          description: "Model tensor specifications and version information"
-          operations:
-            - method: GET
-              name: get-model-metadata
-              description: "Get Model Metadata"
-              call: "kserve.get-model-metadata"
-              with:
-                model_name: "rest.model_name"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/models/{model_name}/ready
-          name: model-readiness
-          description: "Model readiness status"
-          operations:
-            - method: GET
-              name: check-model-readiness
-              description: "Check Model Readiness"
-              call: "kserve.check-model-readiness"
-              with:
-                model_name: "rest.model_name"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/models/{model_name}/infer
-          name: model-inference
-          description: "Submit inference requests to a model"
-          operations:
-            - method: POST
-              name: run-inference
-              description: "Run Model Inference"
-              call: "kserve.run-inference"
-              with:
-                model_name: "rest.model_name"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/models/{model_name}/versions/{model_version}/infer
-          name: model-version-inference
-          description: "Submit inference requests to a specific model version"
-          operations:
-            - method: POST
-              name: run-model-version-inference
-              description: "Run Model Version Inference"
-              call: "kserve.run-model-version-inference"
-              with:
-                model_name: "rest.model_name"
-                model_version: "rest.model_version"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/models/{model_name}/versions/{model_version}/metadata
-          name: model-version-metadata
-          description: "Model version-specific metadata"
-          operations:
-            - method: GET
-              name: get-model-version-metadata
-              description: "Get Model Version Metadata"
-              call: "kserve.get-model-metadata"
-              with:
-                model_name: "rest.model_name"
-                model_version: "rest.model_version"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9090
-      namespace: inference-ops-mcp
-      transport: http
-      description: "MCP server for AI-assisted model inference operations, enabling LLM agents to submit inference requests and inspect model health."
-      tools:
-        - name: check-server-liveness
-          description: "Check if the KServe inference server is live and able to receive requests"
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "kserve.check-server-liveness"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: check-server-readiness
-          description: "Check if all models are loaded and the inference server is ready"
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "kserve.check-server-readiness"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-server-metadata
-          description: "Get inference server name, version, and supported protocol extensions"
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "kserve.get-server-metadata"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: check-model-readiness
-          description: "Check if a specific model is ready for inference"
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "kserve.check-model-readiness"
-          with:
-            model_name: "tools.model_name"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-model-metadata
-          description: "Get model input/output tensor specifications, available versions, and serving platform"
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "kserve.get-model-metadata"
-          with:
-            model_name: "tools.model_name"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: run-inference
-          description: "Submit input tensors to a deployed model and receive inference output tensors. Use get-model-metadata first to discover the correct input names, shapes, and datatypes."
-          hints:
-            readOnly: false
-            idempotent: false
-          call: "kserve.run-inference"
-          with:
-            model_name: "tools.model_name"
-            request_id: "tools.request_id"
-            inputs: "tools.inputs"
-            outputs: "tools.outputs"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: run-model-version-inference
-          description: "Run inference against a pinned model version for A/B testing, canary evaluation, or version-specific integration"
-          hints:
-            readOnly: false
-            idempotent: false
-          call: "kserve.run-model-version-inference"
-          with:
-            model_name: "tools.model_name"
-            model_version: "tools.model_version"
-            inputs: "tools.inputs"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: inference-ops-api
+    description: Unified REST API for model inference operations, health monitoring, and metadata inspection.
+    resources:
+    - path: /v1/health/live
+      name: server-liveness
+      description: Check if the inference server is live
+      operations:
+      - method: GET
+        name: check-server-liveness
+        description: Check Server Liveness
+        call: kserve.check-server-liveness
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/health/ready
+      name: server-readiness
+      description: Check if all models are ready for inference
+      operations:
+      - method: GET
+        name: check-server-readiness
+        description: Check Server Readiness
+        call: kserve.check-server-readiness
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/server
+      name: server-metadata
+      description: Inference server metadata and capabilities
+      operations:
+      - method: GET
+        name: get-server-metadata
+        description: Get Server Metadata
+        call: kserve.get-server-metadata
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/models/{model_name}
+      name: model-metadata
+      description: Model tensor specifications and version information
+      operations:
+      - method: GET
+        name: get-model-metadata
+        description: Get Model Metadata
+        call: kserve.get-model-metadata
+        with:
+          model_name: rest.model_name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/models/{model_name}/ready
+      name: model-readiness
+      description: Model readiness status
+      operations:
+      - method: GET
+        name: check-model-readiness
+        description: Check Model Readiness
+        call: kserve.check-model-readiness
+        with:
+          model_name: rest.model_name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/models/{model_name}/infer
+      name: model-inference
+      description: Submit inference requests to a model
+      operations:
+      - method: POST
+        name: run-inference
+        description: Run Model Inference
+        call: kserve.run-inference
+        with:
+          model_name: rest.model_name
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/models/{model_name}/versions/{model_version}/infer
+      name: model-version-inference
+      description: Submit inference requests to a specific model version
+      operations:
+      - method: POST
+        name: run-model-version-inference
+        description: Run Model Version Inference
+        call: kserve.run-model-version-inference
+        with:
+          model_name: rest.model_name
+          model_version: rest.model_version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/models/{model_name}/versions/{model_version}/metadata
+      name: model-version-metadata
+      description: Model version-specific metadata
+      operations:
+      - method: GET
+        name: get-model-version-metadata
+        description: Get Model Version Metadata
+        call: kserve.get-model-metadata
+        with:
+          model_name: rest.model_name
+          model_version: rest.model_version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: inference-ops-mcp
+    transport: http
+    description: MCP server for AI-assisted model inference operations, enabling LLM agents to submit inference requests and
+      inspect model health.
+    tools:
+    - name: check-server-liveness
+      description: Check if the KServe inference server is live and able to receive requests
+      hints:
+        readOnly: true
+        idempotent: true
+      call: kserve.check-server-liveness
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: check-server-readiness
+      description: Check if all models are loaded and the inference server is ready
+      hints:
+        readOnly: true
+        idempotent: true
+      call: kserve.check-server-readiness
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-server-metadata
+      description: Get inference server name, version, and supported protocol extensions
+      hints:
+        readOnly: true
+        idempotent: true
+      call: kserve.get-server-metadata
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: check-model-readiness
+      description: Check if a specific model is ready for inference
+      hints:
+        readOnly: true
+        idempotent: true
+      call: kserve.check-model-readiness
+      with:
+        model_name: tools.model_name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-model-metadata
+      description: Get model input/output tensor specifications, available versions, and serving platform
+      hints:
+        readOnly: true
+        idempotent: true
+      call: kserve.get-model-metadata
+      with:
+        model_name: tools.model_name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: run-inference
+      description: Submit input tensors to a deployed model and receive inference output tensors. Use get-model-metadata first
+        to discover the correct input names, shapes, and datatypes.
+      hints:
+        readOnly: false
+        idempotent: false
+      call: kserve.run-inference
+      with:
+        model_name: tools.model_name
+        request_id: tools.request_id
+        inputs: tools.inputs
+        outputs: tools.outputs
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: run-model-version-inference
+      description: Run inference against a pinned model version for A/B testing, canary evaluation, or version-specific integration
+      hints:
+        readOnly: false
+        idempotent: false
+      call: kserve.run-model-version-inference
+      with:
+        model_name: tools.model_name
+        model_version: tools.model_version
+        inputs: tools.inputs
+      outputParameters:
+      - type: object
+        mapping: $.
