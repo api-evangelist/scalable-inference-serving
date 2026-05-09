@@ -4,10 +4,10 @@
     {
       "source": "https://kserve.github.io/website/blog/",
       "feed_url": "https://kserve.github.io/website/blog/rss",
-      "saved": 10,
-      "title": "KServe Blog"
+      "title": "KServe Blog",
+      "saved": 0
     }
   ],
   "post_count": 10,
-  "fetched": "2026-05-03T23:35:37Z"
+  "fetched": "2026-05-09T20:17:51Z"
 }
