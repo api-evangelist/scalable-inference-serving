@@ -49,9 +49,9 @@ apis:
         url: https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/openapi/kserve-open-inference-protocol-openapi.yml
       - type: GitHub
         url: https://github.com/kserve/kserve
-      - type: Changelog
+      - type: ChangeLog
         url: https://github.com/kserve/kserve/releases
-      - type: Getting Started
+      - type: GettingStarted
         url: https://kserve.github.io/website/docs/get_started/
       - type: SwaggerUI
         url: https://kserve.github.io/website/latest/reference/swagger-ui/
@@ -84,11 +84,11 @@ apis:
         url: https://docs.bentoml.com/en/latest/
       - type: GitHub
         url: https://github.com/bentoml/BentoML
-      - type: Getting Started
+      - type: GettingStarted
         url: https://docs.bentoml.com/en/latest/get-started/quickstart.html
       - type: Pricing
         url: https://www.bentoml.com/pricing
-      - type: API Reference
+      - type: APIReference
         url: https://docs.bentoml.com/en/latest/reference/index.html
     contact:
       - type: Community
@@ -119,9 +119,9 @@ apis:
         url: https://docs.vllm.ai/en/stable/
       - type: GitHub
         url: https://github.com/vllm-project/vllm
-      - type: API Reference
+      - type: APIReference
         url: https://docs.vllm.ai/en/stable/serving/openai_compatible_server.html
-      - type: Changelog
+      - type: ChangeLog
         url: https://github.com/vllm-project/vllm/releases
     contact:
       - type: GitHub Issues
@@ -152,9 +152,9 @@ apis:
         url: https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/
       - type: GitHub
         url: https://github.com/triton-inference-server/server
-      - type: Getting Started
+      - type: GettingStarted
         url: https://github.com/triton-inference-server/tutorials
-      - type: API Reference
+      - type: APIReference
         url: https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/customization_guide/inference_protocols.html
     contact:
       - type: GitHub Issues
@@ -184,9 +184,9 @@ apis:
         url: https://mlflow.org/docs/latest/rest-api.html
       - type: GitHub
         url: https://github.com/mlflow/mlflow
-      - type: Getting Started
+      - type: GettingStarted
         url: https://mlflow.org/docs/latest/getting-started/intro-quickstart/
-      - type: API Reference
+      - type: APIReference
         url: https://mlflow.org/docs/latest/rest-api.html
     contact:
       - type: Community
@@ -217,9 +217,9 @@ apis:
         url: https://docs.ray.io/en/latest/serve/index.html
       - type: GitHub
         url: https://github.com/ray-project/ray
-      - type: Getting Started
+      - type: GettingStarted
         url: https://docs.ray.io/en/latest/serve/getting_started.html
-      - type: API Reference
+      - type: APIReference
         url: https://docs.ray.io/en/latest/serve/api/index.html
     contact:
       - type: Community
@@ -230,9 +230,9 @@ apis:
 common:
   - type: Authentication
     url: https://kserve.github.io/website/docs/intro
-  - type: Getting Started
+  - type: GettingStarted
     url: https://kserve.github.io/website/docs/get_started/
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/kserve
   - type: CNCF Landscape
     url: https://landscape.cncf.io/card-mode?project=incubating
@@ -248,7 +248,7 @@ common:
     url: https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-schema/kserve-inference-request-schema.json
   - type: JSONSchema
     url: https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-schema/kserve-model-metadata-schema.json
-  - type: JSONLd
+  - type: JSONLD
     url: https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-ld/scalable-inference-serving-context.jsonld
   - type: Vocabulary
     url: https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/vocabulary/scalable-inference-serving-vocabulary.yml
