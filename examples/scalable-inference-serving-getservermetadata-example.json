@@ -1,0 +1,23 @@
+{
+  "operationId": "GetServerMetadata",
+  "method": "GET",
+  "path": "/v2",
+  "summary": "Get Server Metadata",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "name": "triton",
+        "version": "2.30.0",
+        "extensions": [
+          "binary_tensor_data",
+          "classification",
+          "sequence",
+          "model_configuration"
+        ]
+      }
+    }
+  ]
+}

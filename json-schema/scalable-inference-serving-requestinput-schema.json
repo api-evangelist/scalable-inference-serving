@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RequestInput",
+  "title": "RequestInput",
+  "type": "object",
+  "description": "A single input tensor for an inference request.",
+  "required": [
+    "name",
+    "shape",
+    "datatype",
+    "data"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the input tensor (must match the model's input name)."
+    },
+    "shape": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Shape of the input tensor.",
+      "example": [
+        1,
+        128
+      ]
+    },
+    "datatype": {
+      "$ref": "#/components/schemas/TensorDatatype"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "data": {
+      "description": "Tensor data in row-major order. Can be a flat array or nested arrays matching the tensor shape. Data type must match the declared datatype.",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {}
+        },
+        {
+          "type": "string"
+        }
+      ]
+    }
+  }
+}

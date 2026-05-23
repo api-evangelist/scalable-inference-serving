@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TensorDatatype",
+  "title": "TensorDatatype",
+  "type": "string",
+  "description": "Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.",
+  "enum": [
+    "BOOL",
+    "UINT8",
+    "UINT16",
+    "UINT32",
+    "UINT64",
+    "INT8",
+    "INT16",
+    "INT32",
+    "INT64",
+    "FP16",
+    "FP32",
+    "FP64",
+    "BYTES",
+    "STRING"
+  ]
+}

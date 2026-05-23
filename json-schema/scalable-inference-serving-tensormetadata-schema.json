@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TensorMetadata",
+  "title": "TensorMetadata",
+  "type": "object",
+  "description": "Metadata describing a single input or output tensor.",
+  "required": [
+    "name",
+    "datatype",
+    "shape"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the tensor as defined by the model."
+    },
+    "datatype": {
+      "$ref": "#/components/schemas/TensorDatatype"
+    },
+    "shape": {
+      "type": "array",
+      "description": "Shape of the tensor. Use -1 for dynamic dimensions.",
+      "items": {
+        "type": "integer"
+      },
+      "example": [
+        -1,
+        224,
+        224,
+        3
+      ]
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Optional tensor-specific parameters."
+    }
+  }
+}

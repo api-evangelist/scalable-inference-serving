@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ModelMetadataResponse",
+  "title": "ModelMetadataResponse",
+  "type": "object",
+  "description": "Metadata about a model, including its versions, platform, and input/output tensor specifications.",
+  "required": [
+    "name",
+    "platform",
+    "inputs",
+    "outputs"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Model name."
+    },
+    "versions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Available model versions."
+    },
+    "platform": {
+      "type": "string",
+      "description": "Backend platform (e.g., tensorflow_savedmodel, pytorch_libtorch, sklearn_sklearn, xgboost_xgboost, onnxruntime_onnx).",
+      "examples": [
+        "tensorflow_savedmodel",
+        "pytorch_libtorch",
+        "sklearn_sklearn",
+        "onnxruntime_onnx",
+        "ensemble"
+      ]
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TensorMetadata"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TensorMetadata"
+      }
+    }
+  }
+}

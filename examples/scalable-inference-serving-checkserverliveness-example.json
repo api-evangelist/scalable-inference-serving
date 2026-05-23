@@ -1,0 +1,16 @@
+{
+  "operationId": "CheckServerLiveness",
+  "method": "GET",
+  "path": "/v2/health/live",
+  "summary": "Check Server Liveness",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "live": true
+      }
+    }
+  ]
+}

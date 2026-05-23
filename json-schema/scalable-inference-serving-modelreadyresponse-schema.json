@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ModelReadyResponse",
+  "title": "ModelReadyResponse",
+  "type": "object",
+  "description": "Response from the model readiness endpoint.",
+  "required": [
+    "name",
+    "ready"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the model."
+    },
+    "ready": {
+      "type": "boolean",
+      "description": "Indicates if the model is ready for inference."
+    }
+  }
+}

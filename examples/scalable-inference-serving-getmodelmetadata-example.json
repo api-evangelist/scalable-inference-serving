@@ -1,0 +1,43 @@
+{
+  "operationId": "GetModelMetadata",
+  "method": "GET",
+  "path": "/v2/models/{model_name}",
+  "summary": "Get Model Metadata",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "name": "resnet50-image-classifier",
+        "versions": [
+          "1",
+          "2"
+        ],
+        "platform": "tensorflow_savedmodel",
+        "inputs": [
+          {
+            "name": "input_image",
+            "datatype": "FP32",
+            "shape": [
+              -1,
+              224,
+              224,
+              3
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "name": "class_probabilities",
+            "datatype": "FP32",
+            "shape": [
+              -1,
+              1000
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

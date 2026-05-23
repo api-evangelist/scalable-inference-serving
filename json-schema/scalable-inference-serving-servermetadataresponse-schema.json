@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ServerMetadataResponse",
+  "title": "ServerMetadataResponse",
+  "type": "object",
+  "description": "Server metadata including name, version, and supported extensions.",
+  "required": [
+    "name",
+    "version",
+    "extensions"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Server implementation name (e.g., triton, kserve, bentoml).",
+      "example": "triton"
+    },
+    "version": {
+      "type": "string",
+      "description": "Server version string.",
+      "example": "2.30.0"
+    },
+    "extensions": {
+      "type": "array",
+      "description": "List of protocol extensions supported by the server.",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "binary_tensor_data",
+        "classification"
+      ]
+    }
+  }
+}

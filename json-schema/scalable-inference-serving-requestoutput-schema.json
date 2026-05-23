@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RequestOutput",
+  "title": "RequestOutput",
+  "type": "object",
+  "description": "Specifies which output tensor to include in the response.",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the output tensor to include."
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

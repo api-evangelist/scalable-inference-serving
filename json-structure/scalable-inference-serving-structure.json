@@ -1,0 +1,214 @@
+{
+  "provider": "Scalable Inference Serving",
+  "providerId": "scalable-inference-serving",
+  "kind": "json-structure",
+  "description": "Structural overview of the Scalable Inference Serving API surface; extracted from openapi/.",
+  "schemaCount": 13,
+  "operationCount": 9,
+  "schemas": [
+    {
+      "name": "ServerLiveResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "live"
+      ]
+    },
+    {
+      "name": "ServerReadyResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "ready"
+      ]
+    },
+    {
+      "name": "ModelReadyResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "name",
+        "ready"
+      ]
+    },
+    {
+      "name": "ServerMetadataResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "name",
+        "version",
+        "extensions"
+      ]
+    },
+    {
+      "name": "ModelMetadataResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "name",
+        "platform",
+        "inputs",
+        "outputs"
+      ]
+    },
+    {
+      "name": "TensorMetadata",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "name",
+        "datatype",
+        "shape"
+      ]
+    },
+    {
+      "name": "InferenceRequest",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "inputs"
+      ]
+    },
+    {
+      "name": "RequestInput",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "name",
+        "shape",
+        "datatype",
+        "data"
+      ]
+    },
+    {
+      "name": "RequestOutput",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "name"
+      ]
+    },
+    {
+      "name": "InferenceResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "model_name",
+        "outputs"
+      ]
+    },
+    {
+      "name": "ResponseOutput",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "name",
+        "shape",
+        "datatype",
+        "data"
+      ]
+    },
+    {
+      "name": "TensorDatatype",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "ErrorResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "error"
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/v2/health/live",
+      "operationId": "CheckServerLiveness",
+      "summary": "Check Server Liveness",
+      "tags": [
+        "Health"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/health/ready",
+      "operationId": "CheckServerReadiness",
+      "summary": "Check Server Readiness",
+      "tags": [
+        "Health"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/models/{model_name}/ready",
+      "operationId": "CheckModelReadiness",
+      "summary": "Check Model Readiness",
+      "tags": [
+        "Health",
+        "Models"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/models/{model_name}/versions/{model_version}/ready",
+      "operationId": "CheckModelVersionReadiness",
+      "summary": "Check Model Version Readiness",
+      "tags": [
+        "Health",
+        "Models"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2",
+      "operationId": "GetServerMetadata",
+      "summary": "Get Server Metadata",
+      "tags": [
+        "Metadata"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/models/{model_name}",
+      "operationId": "GetModelMetadata",
+      "summary": "Get Model Metadata",
+      "tags": [
+        "Metadata",
+        "Models"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/models/{model_name}/versions/{model_version}",
+      "operationId": "GetModelVersionMetadata",
+      "summary": "Get Model Version Metadata",
+      "tags": [
+        "Metadata",
+        "Models"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/models/{model_name}/infer",
+      "operationId": "RunInference",
+      "summary": "Run Model Inference",
+      "tags": [
+        "Inference"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/models/{model_name}/versions/{model_version}/infer",
+      "operationId": "RunModelVersionInference",
+      "summary": "Run Model Version Inference",
+      "tags": [
+        "Inference"
+      ]
+    }
+  ]
+}

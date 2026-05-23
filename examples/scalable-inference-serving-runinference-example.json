@@ -1,0 +1,77 @@
+{
+  "operationId": "RunInference",
+  "method": "POST",
+  "path": "/v2/models/{model_name}/infer",
+  "summary": "Run Model Inference",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "id": "req-12345",
+        "inputs": [
+          {
+            "name": "text_input",
+            "shape": [
+              1,
+              128
+            ],
+            "datatype": "INT32",
+            "data": [
+              [
+                101,
+                2023,
+                2003,
+                1037,
+                3231,
+                102,
+                0,
+                0
+              ]
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "name": "sentiment_label"
+          },
+          {
+            "name": "confidence_score"
+          }
+        ]
+      }
+    }
+  ],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "model_name": "bert-sentiment-classifier",
+        "model_version": "3",
+        "id": "req-12345",
+        "outputs": [
+          {
+            "name": "sentiment_label",
+            "shape": [
+              1
+            ],
+            "datatype": "BYTES",
+            "data": [
+              "positive"
+            ]
+          },
+          {
+            "name": "confidence_score",
+            "shape": [
+              1
+            ],
+            "datatype": "FP32",
+            "data": [
+              0.9423
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

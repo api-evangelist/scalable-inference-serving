@@ -1,0 +1,16 @@
+{
+  "operationId": "CheckServerReadiness",
+  "method": "GET",
+  "path": "/v2/health/ready",
+  "summary": "Check Server Readiness",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "ready": true
+      }
+    }
+  ]
+}

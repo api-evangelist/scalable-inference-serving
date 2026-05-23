@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/InferenceResponse",
+  "title": "InferenceResponse",
+  "type": "object",
+  "description": "Response from a successful model inference request.",
+  "required": [
+    "model_name",
+    "outputs"
+  ],
+  "properties": {
+    "model_name": {
+      "type": "string",
+      "description": "Name of the model that produced the response."
+    },
+    "model_version": {
+      "type": "string",
+      "description": "Version of the model that produced the response."
+    },
+    "id": {
+      "type": "string",
+      "description": "Request ID echoed from the inference request for correlation."
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "outputs": {
+      "type": "array",
+      "description": "Output tensors from the inference.",
+      "items": {
+        "$ref": "#/components/schemas/ResponseOutput"
+      }
+    }
+  }
+}

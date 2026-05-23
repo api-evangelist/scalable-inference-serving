@@ -1,0 +1,17 @@
+{
+  "operationId": "CheckModelReadiness",
+  "method": "GET",
+  "path": "/v2/models/{model_name}/ready",
+  "summary": "Check Model Readiness",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "example": {
+        "name": "bert-sentiment-classifier",
+        "ready": true
+      }
+    }
+  ]
+}

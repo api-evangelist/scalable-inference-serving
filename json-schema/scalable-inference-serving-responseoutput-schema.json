@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ResponseOutput",
+  "title": "ResponseOutput",
+  "type": "object",
+  "description": "A single output tensor in the inference response.",
+  "required": [
+    "name",
+    "shape",
+    "datatype",
+    "data"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the output tensor."
+    },
+    "shape": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "Shape of the output tensor."
+    },
+    "datatype": {
+      "$ref": "#/components/schemas/TensorDatatype"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "data": {
+      "description": "Output tensor data in row-major order.",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {}
+        },
+        {
+          "type": "string"
+        }
+      ]
+    }
+  }
+}
