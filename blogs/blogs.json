@@ -2,12 +2,20 @@
   "repo": "scalable-inference-serving",
   "feeds": [
     {
-      "source": "https://kserve.github.io/website/blog/",
+      "source": "https://kserve.github.io/website/blog/rss",
       "feed_url": "https://kserve.github.io/website/blog/rss",
-      "title": "KServe Blog",
-      "saved": 12
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://landscape.cncf.io/card-mode?project=incubating",
+      "feed_url": "https://landscape.cncf.io/card-mode?project=incubating",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
   "post_count": 22,
-  "fetched": "2026-05-17T20:20:35Z"
+  "fetched": "2026-06-01T23:35:02Z"
 }
