@@ -1,178 +1,182 @@
-# Scalable Inference Serving
+# Scalable Inference Serving (scalable-inference-serving)
 
-A collection of APIs, frameworks, and platforms for scalable machine learning model inference serving, deployment, and management. Includes the KServe Open Inference Protocol (the CNCF standard for model serving on Kubernetes), BentoML, vLLM (high-throughput LLM inference), NVIDIA Triton Inference Server, MLflow Model Registry, and Ray Serve.
+A collection of APIs, frameworks, and platforms for scalable machine learning model inference serving, deployment, and management. This includes the KServe Open Inference Protocol (the CNCF standard for model serving on Kubernetes), BentoML (developer packaging and serving), vLLM (high-throughput LLM inference), NVIDIA Triton Inference Server, and supporting observability and registry tools. KServe recently joined CNCF as an incubating project (November 2025).
 
-**URL:** [https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/refs/heads/main/apis.yml)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/refs/heads/main/apis.yml)
 
 ## Tags
 
-AI, CNCF, Deployment, Inference, Kubernetes, LLM, Machine Learning, Model Serving, MLOps, Scalability
+- AI
+- CNCF
+- Deployment
+- Inference
+- Kubernetes
+- LLM
+- Machine Learning
+- Model Serving
+- MLOps
+- Scalability
 
 ## Timestamps
 
 - **Created:** 2024-01-01
-- **Modified:** 2026-05-02
+- **Modified:** 2026-05-19
 
 ## APIs
 
 ### KServe Open Inference Protocol API
-Standardized distributed generative and predictive AI inference platform for Kubernetes with REST/gRPC endpoints for model inference, health, and metadata. CNCF incubating project.
 
-**Human URL:** [https://kserve.github.io/website/](https://kserve.github.io/website/)
+KServe implements the Open Inference Protocol (OIP), also known as the KServe V2 Inference Protocol, which provides a standardized REST and gRPC interface for model inference across frameworks. KServe is a standardized distributed generative and predictive AI inference platform for scalable, multi-framework deployment on Kubernetes. CNCF incubating project since November 2025. Supports TensorFlow, PyTorch, scikit-learn, XGBoost, ONNX, vLLM, and HuggingFace.
 
 #### Tags
 
-CNCF, Inference, Kubernetes, Model Serving, Open Inference Protocol, Open Source
+- CNCF
+- Inference
+- Kubernetes
+- Model Serving
+- Open Inference Protocol
+- Open Source
 
 #### Properties
 
 - [Documentation](https://kserve.github.io/website/docs/intro)
-- [OpenAPI](openapi/kserve-open-inference-protocol-openapi.yml)
-- [GitHub](https://github.com/kserve/kserve)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/openapi/kserve-open-inference-protocol-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Git Hub](https://github.com/kserve/kserve)
+- [Changelog](https://github.com/kserve/kserve/releases)
 - [Getting Started](https://kserve.github.io/website/docs/get_started/)
-- [Swagger UI](https://kserve.github.io/website/latest/reference/swagger-ui/)
+- [Swagger U I](https://kserve.github.io/website/latest/reference/swagger-ui/)
+- [Postman Collection](collections/kserve-open-inference-protocol.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/kserve-open-inference-protocol.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### BentoML REST API
-Open-source unified ML model serving framework with auto-generated REST APIs, adaptive batching, Runner abstraction, and KServe integration.
 
-**Human URL:** [https://www.bentoml.com/](https://www.bentoml.com/)
+BentoML is an open-source unified inference platform for deploying and scaling AI models. It auto-generates RESTful APIs from Python service definitions, provides built-in OpenAPI/Swagger documentation, supports adaptive batching, and integrates with KServe for Kubernetes deployment. BentoML 1.0 introduced the Runner abstraction for parallelizing inference workloads with adaptive batching and independent scaling of pre/post-processing from model inference.
 
 #### Tags
 
-Batching, Inference, Model Serving, Open Source, Python, REST API
+- Batching
+- Inference
+- Model Serving
+- Open Source
+- Python
+- REST API
 
 #### Properties
 
 - [Documentation](https://docs.bentoml.com/en/latest/)
-- [GitHub](https://github.com/bentoml/BentoML)
-- [API Reference](https://docs.bentoml.com/en/latest/reference/index.html)
+- [Git Hub](https://github.com/bentoml/BentoML)
 - [Getting Started](https://docs.bentoml.com/en/latest/get-started/quickstart.html)
+- [Pricing](https://www.bentoml.com/pricing)
+- [API Reference](https://docs.bentoml.com/en/latest/reference/index.html)
+- [Postman Collection](collections/kserve-open-inference-protocol.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/kserve-open-inference-protocol.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### vLLM OpenAI-Compatible API
-High-throughput LLM inference engine with PagedAttention, OpenAI-compatible REST API, and KServe integration via LLMInferenceService.
 
-**Human URL:** [https://docs.vllm.ai/](https://docs.vllm.ai/)
+vLLM is a high-throughput and memory-efficient inference engine for LLMs, implementing PagedAttention for efficient KV cache management. vLLM exposes an OpenAI-compatible REST API allowing seamless migration from OpenAI endpoints. In 2026, vLLM integrates with KServe via LLMInferenceService and llm-d for production-grade distributed LLM inference. Powers major LLM deployments at scale.
 
 #### Tags
 
-GPU, Inference, KV Cache, LLM, Model Serving, Open Source, OpenAI-Compatible
+- GPU
+- Inference
+- KV Cache
+- LLM
+- Model Serving
+- Open Source
+- OpenAI-Compatible
 
 #### Properties
 
 - [Documentation](https://docs.vllm.ai/en/stable/)
-- [GitHub](https://github.com/vllm-project/vllm)
+- [Git Hub](https://github.com/vllm-project/vllm)
 - [API Reference](https://docs.vllm.ai/en/stable/serving/openai_compatible_server.html)
+- [Changelog](https://github.com/vllm-project/vllm/releases)
+- [Postman Collection](collections/kserve-open-inference-protocol.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/kserve-open-inference-protocol.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### NVIDIA Triton Inference Server HTTP API
-Open-source inference server implementing OIP with TensorRT, ONNX, TensorFlow, and PyTorch backends; dynamic batching and GPU/CPU concurrent execution.
 
-**Human URL:** [https://developer.nvidia.com/triton-inference-server](https://developer.nvidia.com/triton-inference-server)
+NVIDIA Triton Inference Server is an open-source inference serving software that implements the KServe Open Inference Protocol (V2). Supports TensorRT, ONNX, TensorFlow, PyTorch, and Python backends. Provides dynamic batching, model ensembles, model analyzers, and GPU/CPU inference. Used extensively in production ML pipelines requiring maximum throughput.
 
 #### Tags
 
-GPU, Inference, Model Serving, NVIDIA, Open Source, TensorRT, Triton
+- GPU
+- Inference
+- Model Serving
+- NVIDIA
+- Open Source
+- TensorRT
+- Triton
 
 #### Properties
 
 - [Documentation](https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/)
-- [GitHub](https://github.com/triton-inference-server/server)
+- [Git Hub](https://github.com/triton-inference-server/server)
+- [Getting Started](https://github.com/triton-inference-server/tutorials)
+- [API Reference](https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/customization_guide/inference_protocols.html)
+- [Postman Collection](collections/kserve-open-inference-protocol.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/kserve-open-inference-protocol.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### MLflow Model Registry REST API
-Open-source ML lifecycle platform; REST API for experiments, runs, metrics, artifacts, and model versioning/staging.
 
-**Human URL:** [https://mlflow.org/](https://mlflow.org/)
+MLflow is an open source platform for managing the ML lifecycle, including experiment tracking, reproducibility, and deployment. The MLflow REST API manages experiments, runs, metrics, parameters, artifacts, and the Model Registry for versioning and staging model deployments. CNCF-adjacent; used with KServe for model lifecycle management.
 
 #### Tags
 
-Experiment Tracking, Machine Learning, Model Registry, MLOps, Open Source, Versioning
+- Experiment Tracking
+- Machine Learning
+- Model Registry
+- MLOps
+- Open Source
+- Versioning
 
 #### Properties
 
 - [Documentation](https://mlflow.org/docs/latest/rest-api.html)
-- [GitHub](https://github.com/mlflow/mlflow)
+- [Git Hub](https://github.com/mlflow/mlflow)
 - [Getting Started](https://mlflow.org/docs/latest/getting-started/intro-quickstart/)
+- [API Reference](https://mlflow.org/docs/latest/rest-api.html)
+- [Postman Collection](collections/kserve-open-inference-protocol.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/kserve-open-inference-protocol.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Ray Serve REST API
-Scalable model serving library on Ray; supports composable multi-model pipelines, autoscaling, and HTTP/gRPC ingress.
 
-**Human URL:** [https://docs.ray.io/en/latest/serve/index.html](https://docs.ray.io/en/latest/serve/index.html)
+Ray Serve is a scalable model serving library built on Ray, designed for building online inference APIs. Supports composable deployments, autoscaling, HTTP ingress, gRPC, WebSockets, and request batching. Integrates with any ML framework. The Ray Serve dashboard and REST API manage deployments, replicas, routes, and application status.
 
 #### Tags
 
-Autoscaling, Inference, Machine Learning, Model Serving, Open Source, Python, Ray
+- Autoscaling
+- Inference
+- Machine Learning
+- Model Serving
+- Open Source
+- Python
+- Ray
 
 #### Properties
 
 - [Documentation](https://docs.ray.io/en/latest/serve/index.html)
-- [GitHub](https://github.com/ray-project/ray)
+- [Git Hub](https://github.com/ray-project/ray)
+- [Getting Started](https://docs.ray.io/en/latest/serve/getting_started.html)
 - [API Reference](https://docs.ray.io/en/latest/serve/api/index.html)
-
-## OpenAPI Specifications
-
-| Artifact | Description |
-|---|---|
-| [KServe Open Inference Protocol OpenAPI](openapi/kserve-open-inference-protocol-openapi.yml) | Full OpenAPI 3.1 spec for the OIP V2 REST API covering health, metadata, and inference endpoints with complete request/response schemas. |
-
-## Spectral Rules
-
-| Artifact | Description |
-|---|---|
-| [KServe Open Inference Protocol Rules](rules/kserve-open-inference-protocol-rules.yml) | Spectral ruleset enforcing OIP path conventions, operation ID naming, required fields, tensor datatype enumeration, and Title Case summary requirements. |
-
-## Capabilities
-
-### Shared Definitions
-
-| Artifact | Description |
-|---|---|
-| [KServe Open Inference Protocol](capabilities/shared/kserve-open-inference-protocol.yaml) | Shared per-API capability definition with full consumes/exposes structure for all 7 OIP operations across server health, metadata, and inference endpoints. |
-
-### Workflow Capabilities
-
-| Artifact | Description |
-|---|---|
-| [Model Inference Operations](capabilities/model-inference-operations.yaml) | Unified REST and MCP workflow capability for ML engineers to run inference, monitor health, and inspect model metadata. Exposes 8 tools via REST (port 8080) and MCP (port 9090). |
-
-## Schemas
-
-| Artifact | Description |
-|---|---|
-| [Inference Request Schema](json-schema/kserve-inference-request-schema.json) | JSON Schema for OIP V2 inference requests including tensor inputs, shape, datatype, and optional outputs specification. |
-| [Model Metadata Schema](json-schema/kserve-model-metadata-schema.json) | JSON Schema for model metadata responses including tensor specifications and platform information. |
-
-## Structures
-
-| Artifact | Description |
-|---|---|
-| [Inference Request Structure](json-structure/kserve-inference-request-structure.json) | Hierarchical field documentation for OIP inference request objects. |
-
-## Linked Data
-
-| Artifact | Description |
-|---|---|
-| [Scalable Inference Serving Context](json-ld/scalable-inference-serving-context.jsonld) | JSON-LD context mapping inference serving vocabulary to schema.org, KServe, and OIP namespaces. |
-
-## Examples
-
-| Artifact | Description |
-|---|---|
-| [Check Server Liveness Example](examples/kserve-check-server-liveness-example.json) | Example GET /v2/health/live request and response for Kubernetes livenessProbe implementation. |
-| [Run Inference Example](examples/kserve-run-inference-example.json) | Example POST /v2/models/{model_name}/infer with BERT tokenized input tensors and sentiment classification output. |
-| [Get Model Metadata Example](examples/kserve-get-model-metadata-example.json) | Example GET /v2/models/{model_name} response with ResNet-50 input/output tensor specifications. |
-
-## Vocabulary
-
-| Artifact | Description |
-|---|---|
-| [Scalable Inference Serving Vocabulary](vocabulary/scalable-inference-serving-vocabulary.yml) | Normative vocabulary covering inference protocols, serving frameworks, LLM concepts (PagedAttention, KV Cache), batching strategies, and MLOps lifecycle. |
+- [Postman Collection](collections/kserve-open-inference-protocol.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/kserve-open-inference-protocol.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ## Common Properties
 
+- [Authentication](https://kserve.github.io/website/docs/intro)
 - [Getting Started](https://kserve.github.io/website/docs/get_started/)
 - [GitHub Organization](https://github.com/kserve)
-- [CNCF Landscape](https://landscape.cncf.io/card-mode?project=incubating)
+- [C N C F  Landscape](https://landscape.cncf.io/card-mode?project=incubating)
 - [Blog](https://kserve.github.io/website/blog/)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/openapi/kserve-open-inference-protocol-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Spectral Ruleset](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/rules/kserve-open-inference-protocol-rules.yml)
+- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-schema/kserve-inference-request-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-schema/kserve-model-metadata-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON-LD](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-ld/scalable-inference-serving-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/vocabulary/scalable-inference-serving-vocabulary.yml)
 
 ## Maintainers
 
-**API Evangelist** — [kin@apievangelist.com](mailto:kin@apievangelist.com) — [https://apievangelist.com](https://apievangelist.com)
+**Email:** kin@apievangelist.com
+**URL:** https://apievangelist.com
