@@ -55,7 +55,7 @@ apis:
     contact:
       - type: Slack
         url: https://kubernetes.slack.com/archives/CH6E58LNP
-      - type: GitHub Issues
+      - type: GitHubIssues
         url: https://github.com/kserve/kserve/issues
   - name: BentoML REST API
     description: >-
@@ -88,7 +88,7 @@ apis:
     contact:
       - type: Community
         url: https://l.bentoml.com/join-slack
-      - type: GitHub Issues
+      - type: GitHubIssues
         url: https://github.com/bentoml/BentoML/issues
   - name: vLLM OpenAI-Compatible API
     description: >-
@@ -117,7 +117,7 @@ apis:
       - type: ChangeLog
         url: https://github.com/vllm-project/vllm/releases
     contact:
-      - type: GitHub Issues
+      - type: GitHubIssues
         url: https://github.com/vllm-project/vllm/issues
       - type: Slack
         url: https://vllm-dev.slack.com/
@@ -149,7 +149,7 @@ apis:
         url: >-
           https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/customization_guide/inference_protocols.html
     contact:
-      - type: GitHub Issues
+      - type: GitHubIssues
         url: https://github.com/triton-inference-server/server/issues
       - type: Forums
         url: https://forums.developer.nvidia.com/c/ai-data-science/deep-learning/triton-inference-server/
@@ -181,7 +181,7 @@ apis:
     contact:
       - type: Community
         url: https://github.com/mlflow/mlflow/discussions
-      - type: GitHub Issues
+      - type: GitHubIssues
         url: https://github.com/mlflow/mlflow/issues
   - name: Ray Serve REST API
     description: >-
@@ -211,7 +211,7 @@ apis:
     contact:
       - type: Community
         url: https://discuss.ray.io/
-      - type: GitHub Issues
+      - type: GitHubIssues
         url: https://github.com/ray-project/ray/issues
 common:
   - type: Authentication
