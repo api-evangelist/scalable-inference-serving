@@ -214,6 +214,8 @@ apis:
       - type: GitHubIssues
         url: https://github.com/ray-project/ray/issues
 common:
+  - type: AgenticAccess
+    url: agentic-access/scalable-inference-serving-agentic-access.yml
   - type: Authentication
     url: https://kserve.github.io/website/docs/intro
   - type: GettingStarted
