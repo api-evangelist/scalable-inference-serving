@@ -1,0 +1,182 @@
+openapi: 3.1.0
+info:
+  title: KServe Open Inference Protocol Health API
+  description: 'The Open Inference Protocol (OIP), also known as the KServe V2 Inference Protocol, provides a standardized REST interface for model inference across ML serving frameworks. Implemented by KServe (CNCF incubating), NVIDIA Triton Inference Server, BentoML, TorchServe, and OpenVINO Model Server.
+
+    The protocol defines health, metadata, and inference endpoints for both the server and individual models. An HTTP POST to the inference endpoint submits an inference request; GET endpoints retrieve health and metadata.
+
+    KServe is a standardized distributed generative and predictive AI inference platform for scalable, multi-framework deployment on Kubernetes.'
+  version: v2
+  contact:
+    name: KServe Community
+    url: https://github.com/kserve/kserve
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  externalDocs:
+    description: KServe Open Inference Protocol Documentation
+    url: https://kserve.github.io/website/docs/concepts/architecture/data-plane/v2-protocol
+servers:
+- url: https://inference.kserve.example.com
+  description: KServe InferenceService endpoint
+tags:
+- name: Health
+  description: Server and model liveness and readiness probes
+paths:
+  /v2/health/live:
+    get:
+      operationId: CheckServerLiveness
+      summary: Check Server Liveness
+      description: The server liveness API indicates if the inference server is able to receive and respond to metadata and inference requests. Can be used directly to implement the Kubernetes livenessProbe.
+      tags:
+      - Health
+      responses:
+        '200':
+          description: Server is live and ready to receive requests.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerLiveResponse'
+              example:
+                live: true
+        '503':
+          description: Server is not live.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/health/ready:
+    get:
+      operationId: CheckServerReadiness
+      summary: Check Server Readiness
+      description: The server readiness API indicates if all the models are ready for inferencing. Can be used directly to implement the Kubernetes readinessProbe.
+      tags:
+      - Health
+      responses:
+        '200':
+          description: Server is ready; all models are loaded and ready for inference.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerReadyResponse'
+              example:
+                ready: true
+        '503':
+          description: Server is not ready (models loading or failed).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/ready:
+    get:
+      operationId: CheckModelReadiness
+      summary: Check Model Readiness
+      description: The model readiness API indicates if a specific model is ready for inferencing. Check this before submitting inference requests to a newly deployed model.
+      tags:
+      - Health
+      parameters:
+      - name: model_name
+        in: path
+        required: true
+        description: Name of the model to check readiness for.
+        schema:
+          type: string
+        example: bert-sentiment-classifier
+      responses:
+        '200':
+          description: Model is ready for inference.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelReadyResponse'
+              example:
+                name: bert-sentiment-classifier
+                ready: true
+        '404':
+          description: Model not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Model not ready.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/versions/{model_version}/ready:
+    get:
+      operationId: CheckModelVersionReadiness
+      summary: Check Model Version Readiness
+      description: Check if a specific version of a model is ready for inference.
+      tags:
+      - Health
+      parameters:
+      - name: model_name
+        in: path
+        required: true
+        schema:
+          type: string
+        example: bert-sentiment-classifier
+      - name: model_version
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '2'
+      responses:
+        '200':
+          description: Model version is ready.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelReadyResponse'
+        '404':
+          description: Model version not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ModelReadyResponse:
+      type: object
+      description: Response from the model readiness endpoint.
+      required:
+      - name
+      - ready
+      properties:
+        name:
+          type: string
+          description: Name of the model.
+        ready:
+          type: boolean
+          description: Indicates if the model is ready for inference.
+    ServerReadyResponse:
+      type: object
+      description: Response from the server readiness endpoint.
+      required:
+      - ready
+      properties:
+        ready:
+          type: boolean
+          description: Indicates if the server is ready for inference.
+    ErrorResponse:
+      type: object
+      description: Error response returned when an inference or metadata request fails.
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message describing why the request failed.
+          example: 'model not found: bert-sentiment-classifier'
+    ServerLiveResponse:
+      type: object
+      description: Response from the server liveness endpoint.
+      required:
+      - live
+      properties:
+        live:
+          type: boolean
+          description: Indicates if the server is live.

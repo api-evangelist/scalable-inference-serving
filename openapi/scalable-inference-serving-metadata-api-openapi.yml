@@ -1,0 +1,243 @@
+openapi: 3.1.0
+info:
+  title: KServe Open Inference Protocol Health Metadata API
+  description: 'The Open Inference Protocol (OIP), also known as the KServe V2 Inference Protocol, provides a standardized REST interface for model inference across ML serving frameworks. Implemented by KServe (CNCF incubating), NVIDIA Triton Inference Server, BentoML, TorchServe, and OpenVINO Model Server.
+
+    The protocol defines health, metadata, and inference endpoints for both the server and individual models. An HTTP POST to the inference endpoint submits an inference request; GET endpoints retrieve health and metadata.
+
+    KServe is a standardized distributed generative and predictive AI inference platform for scalable, multi-framework deployment on Kubernetes.'
+  version: v2
+  contact:
+    name: KServe Community
+    url: https://github.com/kserve/kserve
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  externalDocs:
+    description: KServe Open Inference Protocol Documentation
+    url: https://kserve.github.io/website/docs/concepts/architecture/data-plane/v2-protocol
+servers:
+- url: https://inference.kserve.example.com
+  description: KServe InferenceService endpoint
+tags:
+- name: Metadata
+  description: Server and model metadata endpoints
+paths:
+  /v2:
+    get:
+      operationId: GetServerMetadata
+      summary: Get Server Metadata
+      description: Returns metadata about the inference server, including its name, version, and the extensions it supports.
+      tags:
+      - Metadata
+      responses:
+        '200':
+          description: Server metadata returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerMetadataResponse'
+              example:
+                name: triton
+                version: 2.30.0
+                extensions:
+                - binary_tensor_data
+                - classification
+                - sequence
+                - model_configuration
+  /v2/models/{model_name}:
+    get:
+      operationId: GetModelMetadata
+      summary: Get Model Metadata
+      description: Returns metadata about a model, including its name, versions, platform, inputs, and outputs. Use this to discover the input/output tensor shapes and data types before submitting inference requests.
+      tags:
+      - Metadata
+      parameters:
+      - name: model_name
+        in: path
+        required: true
+        description: Name of the model.
+        schema:
+          type: string
+        example: resnet50-image-classifier
+      responses:
+        '200':
+          description: Model metadata returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelMetadataResponse'
+              example:
+                name: resnet50-image-classifier
+                versions:
+                - '1'
+                - '2'
+                platform: tensorflow_savedmodel
+                inputs:
+                - name: input_image
+                  datatype: FP32
+                  shape:
+                  - -1
+                  - 224
+                  - 224
+                  - 3
+                outputs:
+                - name: class_probabilities
+                  datatype: FP32
+                  shape:
+                  - -1
+                  - 1000
+        '404':
+          description: Model not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/versions/{model_version}:
+    get:
+      operationId: GetModelVersionMetadata
+      summary: Get Model Version Metadata
+      description: Returns metadata for a specific version of a model.
+      tags:
+      - Metadata
+      parameters:
+      - name: model_name
+        in: path
+        required: true
+        schema:
+          type: string
+        example: resnet50-image-classifier
+      - name: model_version
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '2'
+      responses:
+        '200':
+          description: Model version metadata returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelMetadataResponse'
+        '404':
+          description: Model version not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    TensorMetadata:
+      type: object
+      description: Metadata describing a single input or output tensor.
+      required:
+      - name
+      - datatype
+      - shape
+      properties:
+        name:
+          type: string
+          description: Name of the tensor as defined by the model.
+        datatype:
+          $ref: '#/components/schemas/TensorDatatype'
+        shape:
+          type: array
+          description: Shape of the tensor. Use -1 for dynamic dimensions.
+          items:
+            type: integer
+          example:
+          - -1
+          - 224
+          - 224
+          - 3
+        parameters:
+          type: object
+          additionalProperties: true
+          description: Optional tensor-specific parameters.
+    ServerMetadataResponse:
+      type: object
+      description: Server metadata including name, version, and supported extensions.
+      required:
+      - name
+      - version
+      - extensions
+      properties:
+        name:
+          type: string
+          description: Server implementation name (e.g., triton, kserve, bentoml).
+          example: triton
+        version:
+          type: string
+          description: Server version string.
+          example: 2.30.0
+        extensions:
+          type: array
+          description: List of protocol extensions supported by the server.
+          items:
+            type: string
+          example:
+          - binary_tensor_data
+          - classification
+    ErrorResponse:
+      type: object
+      description: Error response returned when an inference or metadata request fails.
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message describing why the request failed.
+          example: 'model not found: bert-sentiment-classifier'
+    ModelMetadataResponse:
+      type: object
+      description: Metadata about a model, including its versions, platform, and input/output tensor specifications.
+      required:
+      - name
+      - platform
+      - inputs
+      - outputs
+      properties:
+        name:
+          type: string
+          description: Model name.
+        versions:
+          type: array
+          items:
+            type: string
+          description: Available model versions.
+        platform:
+          type: string
+          description: Backend platform (e.g., tensorflow_savedmodel, pytorch_libtorch, sklearn_sklearn, xgboost_xgboost, onnxruntime_onnx).
+          examples:
+          - tensorflow_savedmodel
+          - pytorch_libtorch
+          - sklearn_sklearn
+          - onnxruntime_onnx
+          - ensemble
+        inputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/TensorMetadata'
+        outputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/TensorMetadata'
+    TensorDatatype:
+      type: string
+      description: Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.
+      enum:
+      - BOOL
+      - UINT8
+      - UINT16
+      - UINT32
+      - UINT64
+      - INT8
+      - INT16
+      - INT32
+      - INT64
+      - FP16
+      - FP32
+      - FP64
+      - BYTES
+      - STRING
