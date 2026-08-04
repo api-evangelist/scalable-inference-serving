@@ -1,0 +1,20 @@
+{
+  "provider": "scalable-inference-serving",
+  "sources": [
+    "scalable-inference-serving-health-api-openapi.yml",
+    "scalable-inference-serving-inference-api-openapi.yml",
+    "scalable-inference-serving-metadata-api-openapi.yml",
+    "scalable-inference-serving-models-api-openapi.yml"
+  ],
+  "outputs": [
+    "scalable-inference-serving-health-api-openapi.yml",
+    "scalable-inference-serving-inference-api-openapi.yml",
+    "scalable-inference-serving-metadata-api-openapi.yml",
+    "scalable-inference-serving-models-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
