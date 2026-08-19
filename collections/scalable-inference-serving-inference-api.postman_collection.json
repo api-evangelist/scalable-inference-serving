@@ -1,0 +1,564 @@
+{
+  "item": [
+    {
+      "id": "2a09ff01-d792-4b2f-ad84-d38b0063dfc5",
+      "name": "Inference",
+      "description": {
+        "content": "Model inference request endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ffa1629d-23ee-4866-8b6b-361477a2d1e5",
+          "name": "Run Model Inference",
+          "request": {
+            "name": "Run Model Inference",
+            "description": {
+              "content": "Submit an inference request to a model. The request body contains the input tensors as JSON. Inputs are specified as an array of named tensors with shape, datatype, and data fields. The response contains the model's output tensors.\nFor large tensor payloads, the binary tensor data extension allows sending tensor data as binary in the request body alongside the JSON header.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "infer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model to run inference against."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"<string>\",\n      \"shape\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": true\n      }\n    }\n  ],\n  \"id\": \"<string>\",\n  \"parameters\": {\n    \"key_0\": \"string\",\n    \"key_1\": 4899.8710442547035\n  },\n  \"outputs\": [\n    {\n      \"name\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": 4902.214066022431\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": true,\n        \"key_1\": 7159\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f8df4a53-2914-42c3-baa2-c88e673c9c58",
+              "name": "Inference completed successfully. Returns output tensors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model to run inference against."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"req-12345\",\n  \"inputs\": [\n    {\n      \"name\": \"text_input\",\n      \"shape\": [\n        1,\n        128\n      ],\n      \"datatype\": \"INT32\",\n      \"data\": [\n        [\n          101,\n          2023,\n          2003,\n          1037,\n          3231,\n          102,\n          0,\n          0\n        ]\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"sentiment_label\"\n    },\n    {\n      \"name\": \"confidence_score\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"model_name\": \"bert-sentiment-classifier\",\n  \"model_version\": \"3\",\n  \"id\": \"req-12345\",\n  \"outputs\": [\n    {\n      \"name\": \"sentiment_label\",\n      \"shape\": [\n        1\n      ],\n      \"datatype\": \"BYTES\",\n      \"data\": [\n        \"positive\"\n      ]\n    },\n    {\n      \"name\": \"confidence_score\",\n      \"shape\": [\n        1\n      ],\n      \"datatype\": \"FP32\",\n      \"data\": [\n        0.9423\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5bba8df4-8d32-4ca4-8c50-0798f8f91d96",
+              "name": "Invalid inference request (bad input shape, unsupported datatype, etc.)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model to run inference against."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"req-12345\",\n  \"inputs\": [\n    {\n      \"name\": \"text_input\",\n      \"shape\": [\n        1,\n        128\n      ],\n      \"datatype\": \"INT32\",\n      \"data\": [\n        [\n          101,\n          2023,\n          2003,\n          1037,\n          3231,\n          102,\n          0,\n          0\n        ]\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"sentiment_label\"\n    },\n    {\n      \"name\": \"confidence_score\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"model not found: bert-sentiment-classifier\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3668bb9d-7278-4ea3-8516-55adc3f2fa1f",
+              "name": "Model not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model to run inference against."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"req-12345\",\n  \"inputs\": [\n    {\n      \"name\": \"text_input\",\n      \"shape\": [\n        1,\n        128\n      ],\n      \"datatype\": \"INT32\",\n      \"data\": [\n        [\n          101,\n          2023,\n          2003,\n          1037,\n          3231,\n          102,\n          0,\n          0\n        ]\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"sentiment_label\"\n    },\n    {\n      \"name\": \"confidence_score\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"model not found: bert-sentiment-classifier\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7014fcb2-6a62-4d6a-a6d5-3771a74a6ac3",
+              "name": "Model not ready or server overloaded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model to run inference against."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"req-12345\",\n  \"inputs\": [\n    {\n      \"name\": \"text_input\",\n      \"shape\": [\n        1,\n        128\n      ],\n      \"datatype\": \"INT32\",\n      \"data\": [\n        [\n          101,\n          2023,\n          2003,\n          1037,\n          3231,\n          102,\n          0,\n          0\n        ]\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"sentiment_label\"\n    },\n    {\n      \"name\": \"confidence_score\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"model not found: bert-sentiment-classifier\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "24fc010c-7cac-4a3b-ab8a-de26fbf378ef",
+          "name": "Run Model Version Inference",
+          "request": {
+            "name": "Run Model Version Inference",
+            "description": {
+              "content": "Submit an inference request to a specific version of a model. Useful for A/B testing, canary rollouts, and version-pinned integrations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "versions",
+                ":model_version",
+                "infer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_version",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"<string>\",\n      \"shape\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": true\n      }\n    }\n  ],\n  \"id\": \"<string>\",\n  \"parameters\": {\n    \"key_0\": \"string\",\n    \"key_1\": 4899.8710442547035\n  },\n  \"outputs\": [\n    {\n      \"name\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": 4902.214066022431\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": true,\n        \"key_1\": 7159\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eede395d-1f8a-428e-b116-e795fe8117c8",
+              "name": "Inference completed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        1,\n        128\n      ],\n      \"datatype\": \"BYTES\",\n      \"parameters\": {\n        \"key_0\": 5129,\n        \"key_1\": 331,\n        \"key_2\": \"string\"\n      }\n    }\n  ],\n  \"id\": \"req-a1b2c3d4\",\n  \"parameters\": {\n    \"key_0\": 3099.846265439864,\n    \"key_1\": \"string\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"key_0\": 4486\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"key_0\": 9402\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"model_name\": \"string\",\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        3324,\n        5117\n      ],\n      \"datatype\": \"INT8\",\n      \"parameters\": {\n        \"key_0\": false\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        4214,\n        9695\n      ],\n      \"datatype\": \"INT8\",\n      \"parameters\": {\n        \"key_0\": 2292\n      }\n    }\n  ],\n  \"model_version\": \"string\",\n  \"id\": \"string\",\n  \"parameters\": {\n    \"key_0\": 1910,\n    \"key_1\": 9108,\n    \"key_2\": 4415\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1642e8c5-d786-44b8-a962-9937ba2a4ded",
+              "name": "Invalid inference request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        1,\n        128\n      ],\n      \"datatype\": \"BYTES\",\n      \"parameters\": {\n        \"key_0\": 5129,\n        \"key_1\": 331,\n        \"key_2\": \"string\"\n      }\n    }\n  ],\n  \"id\": \"req-a1b2c3d4\",\n  \"parameters\": {\n    \"key_0\": 3099.846265439864,\n    \"key_1\": \"string\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"key_0\": 4486\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"key_0\": 9402\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"model not found: bert-sentiment-classifier\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b164e10a-7672-4c53-ba85-7f82182c3d32",
+              "name": "Model or model version not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        1,\n        128\n      ],\n      \"datatype\": \"BYTES\",\n      \"parameters\": {\n        \"key_0\": 5129,\n        \"key_1\": 331,\n        \"key_2\": \"string\"\n      }\n    }\n  ],\n  \"id\": \"req-a1b2c3d4\",\n  \"parameters\": {\n    \"key_0\": 3099.846265439864,\n    \"key_1\": \"string\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"key_0\": 4486\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"key_0\": 9402\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"model not found: bert-sentiment-classifier\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://inference.kserve.example.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a1ca33a9-c4e9-4c53-b4a7-5aaa74bf998a",
+    "name": "KServe Open Protocol Health Inference API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Open Inference Protocol (OIP), also known as the KServe V2 Inference Protocol, provides a standardized REST interface for model inference across ML serving frameworks. Implemented by KServe (CNCF incubating), NVIDIA Triton Inference Server, BentoML, TorchServe, and OpenVINO Model Server.\nThe protocol defines health, metadata, and inference endpoints for both the server and individual models. An HTTP POST to the inference endpoint submits an inference request; GET endpoints retrieve health and metadata.\nKServe is a standardized distributed generative and predictive AI inference platform for scalable, multi-framework deployment on Kubernetes.\n\nContact Support:\n Name: KServe Community",
+      "type": "text/plain"
+    }
+  }
+}

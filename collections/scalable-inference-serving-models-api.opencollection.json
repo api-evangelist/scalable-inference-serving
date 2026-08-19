@@ -1,0 +1,102 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KServe Open Inference Protocol Health Models API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check Model Readiness",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://inference.kserve.example.com/v2/models/:model_name/ready",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "bert-sentiment-classifier",
+                "type": "path",
+                "description": "Name of the model to check readiness for."
+              }
+            ]
+          },
+          "docs": "The model readiness API indicates if a specific model is ready for inferencing. Check this before submitting inference requests to a newly deployed model."
+        },
+        {
+          "info": {
+            "name": "Check Model Version Readiness",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://inference.kserve.example.com/v2/models/:model_name/versions/:model_version/ready",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "bert-sentiment-classifier",
+                "type": "path"
+              },
+              {
+                "name": "model_version",
+                "value": "2",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Check if a specific version of a model is ready for inference."
+        },
+        {
+          "info": {
+            "name": "Get Model Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://inference.kserve.example.com/v2/models/:model_name",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "resnet50-image-classifier",
+                "type": "path",
+                "description": "Name of the model."
+              }
+            ]
+          },
+          "docs": "Returns metadata about a model, including its name, versions, platform, inputs, and outputs. Use this to discover the input/output tensor shapes and data types before submitting inference requests."
+        },
+        {
+          "info": {
+            "name": "Get Model Version Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://inference.kserve.example.com/v2/models/:model_name/versions/:model_version",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "resnet50-image-classifier",
+                "type": "path"
+              },
+              {
+                "name": "model_version",
+                "value": "2",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns metadata for a specific version of a model."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

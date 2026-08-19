@@ -1,0 +1,603 @@
+{
+  "item": [
+    {
+      "id": "08707527-65c6-452b-9886-7c5d820d5bce",
+      "name": "Health",
+      "description": {
+        "content": "Server and model liveness and readiness probes",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "410dcecf-4205-4eab-9885-e0388a552259",
+          "name": "Check Server Liveness",
+          "request": {
+            "name": "Check Server Liveness",
+            "description": {
+              "content": "The server liveness API indicates if the inference server is able to receive and respond to metadata and inference requests. Can be used directly to implement the Kubernetes livenessProbe.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "health",
+                "live"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "433ba858-62b5-4dea-9469-125d36a583b8",
+              "name": "Server is live and ready to receive requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "health",
+                    "live"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"live\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb3c89f4-aecf-4dfd-8640-e8747e1ef2da",
+              "name": "Server is not live.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "health",
+                    "live"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"model not found: bert-sentiment-classifier\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ae4b5f1e-822f-4a4e-b226-a24f4d96cb00",
+          "name": "Check Server Readiness",
+          "request": {
+            "name": "Check Server Readiness",
+            "description": {
+              "content": "The server readiness API indicates if all the models are ready for inferencing. Can be used directly to implement the Kubernetes readinessProbe.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "health",
+                "ready"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7967111b-3367-40fd-8342-df3d7bf43aaa",
+              "name": "Server is ready; all models are loaded and ready for inference.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "health",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ready\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d628ed6-c1d8-4be2-ac96-9e85abc41905",
+              "name": "Server is not ready (models loading or failed).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "health",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"model not found: bert-sentiment-classifier\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "27a96ab4-a2fd-4e6e-90db-eb0b4bf2e805",
+          "name": "Check Model Readiness",
+          "request": {
+            "name": "Check Model Readiness",
+            "description": {
+              "content": "The model readiness API indicates if a specific model is ready for inferencing. Check this before submitting inference requests to a newly deployed model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "ready"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model to check readiness for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8edee4a5-0523-48f8-99e8-6bd95ce6ce6f",
+              "name": "Model is ready for inference.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model to check readiness for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"bert-sentiment-classifier\",\n  \"ready\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3af5f97c-acd3-4189-b268-7c2219489d92",
+              "name": "Model not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model to check readiness for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"model not found: bert-sentiment-classifier\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d95b9667-b8e1-4593-b541-0660b4f9b01c",
+              "name": "Model not ready.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model to check readiness for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"model not found: bert-sentiment-classifier\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a877f6c-df69-42da-8712-1ec74dd544db",
+          "name": "Check Model Version Readiness",
+          "request": {
+            "name": "Check Model Version Readiness",
+            "description": {
+              "content": "Check if a specific version of a model is ready for inference.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "versions",
+                ":model_version",
+                "ready"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_version",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "655464f4-ba7d-4ae0-9cd2-f55c3872f4ec",
+              "name": "Model version is ready.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"ready\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6139778d-66c8-40f8-84ea-df8bb33dd3a8",
+              "name": "Model version not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"model not found: bert-sentiment-classifier\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://inference.kserve.example.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ac793aa0-66c1-4481-bcf2-b15002279512",
+    "name": "KServe Open Inference Protocol Health API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Open Inference Protocol (OIP), also known as the KServe V2 Inference Protocol, provides a standardized REST interface for model inference across ML serving frameworks. Implemented by KServe (CNCF incubating), NVIDIA Triton Inference Server, BentoML, TorchServe, and OpenVINO Model Server.\nThe protocol defines health, metadata, and inference endpoints for both the server and individual models. An HTTP POST to the inference endpoint submits an inference request; GET endpoints retrieve health and metadata.\nKServe is a standardized distributed generative and predictive AI inference platform for scalable, multi-framework deployment on Kubernetes.\n\nContact Support:\n Name: KServe Community",
+      "type": "text/plain"
+    }
+  }
+}

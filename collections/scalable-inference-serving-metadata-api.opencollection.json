@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KServe Open Inference Protocol Health Metadata API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Server Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://inference.kserve.example.com/v2"
+          },
+          "docs": "Returns metadata about the inference server, including its name, version, and the extensions it supports."
+        },
+        {
+          "info": {
+            "name": "Get Model Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://inference.kserve.example.com/v2/models/:model_name",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "resnet50-image-classifier",
+                "type": "path",
+                "description": "Name of the model."
+              }
+            ]
+          },
+          "docs": "Returns metadata about a model, including its name, versions, platform, inputs, and outputs. Use this to discover the input/output tensor shapes and data types before submitting inference requests."
+        },
+        {
+          "info": {
+            "name": "Get Model Version Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://inference.kserve.example.com/v2/models/:model_name/versions/:model_version",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "resnet50-image-classifier",
+                "type": "path"
+              },
+              {
+                "name": "model_version",
+                "value": "2",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns metadata for a specific version of a model."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

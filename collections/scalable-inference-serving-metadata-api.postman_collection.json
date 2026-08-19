@@ -1,0 +1,399 @@
+{
+  "item": [
+    {
+      "id": "82cf51b8-975f-4dd4-b9dd-71ab03a089f0",
+      "name": "Metadata",
+      "description": {
+        "content": "Server and model metadata endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c50a4625-91d2-49f6-8d08-087d4ca3c700",
+          "name": "Get Server Metadata",
+          "request": {
+            "name": "Get Server Metadata",
+            "description": {
+              "content": "Returns metadata about the inference server, including its name, version, and the extensions it supports.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "65667fc3-245f-4b73-a6b1-e3f07ad1232d",
+              "name": "Server metadata returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"triton\",\n  \"version\": \"2.30.0\",\n  \"extensions\": [\n    \"binary_tensor_data\",\n    \"classification\",\n    \"sequence\",\n    \"model_configuration\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e7dcdfab-3aed-4242-9acb-acbde9efecf2",
+          "name": "Get Model Metadata",
+          "request": {
+            "name": "Get Model Metadata",
+            "description": {
+              "content": "Returns metadata about a model, including its name, versions, platform, inputs, and outputs. Use this to discover the input/output tensor shapes and data types before submitting inference requests.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7a726855-f768-4bc3-bc68-8959c2b60de4",
+              "name": "Model metadata returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"resnet50-image-classifier\",\n  \"versions\": [\n    \"1\",\n    \"2\"\n  ],\n  \"platform\": \"tensorflow_savedmodel\",\n  \"inputs\": [\n    {\n      \"name\": \"input_image\",\n      \"datatype\": \"FP32\",\n      \"shape\": [\n        -1,\n        224,\n        224,\n        3\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"class_probabilities\",\n      \"datatype\": \"FP32\",\n      \"shape\": [\n        -1,\n        1000\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b9f5237-1f99-4036-a9d4-122e561dc0a0",
+              "name": "Model not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"model not found: bert-sentiment-classifier\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bba05b02-b01f-4517-8d82-adf84bfbc1e0",
+          "name": "Get Model Version Metadata",
+          "request": {
+            "name": "Get Model Version Metadata",
+            "description": {
+              "content": "Returns metadata for a specific version of a model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "versions",
+                ":model_version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_version",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bf528eaa-3843-43a1-999a-282bac7ceb02",
+              "name": "Model version metadata returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"platform\": \"tensorflow_savedmodel\",\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"datatype\": \"FP64\",\n      \"shape\": [\n        -1,\n        224,\n        224,\n        3\n      ],\n      \"parameters\": {\n        \"key_0\": \"string\"\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"datatype\": \"UINT64\",\n      \"shape\": [\n        -1,\n        224,\n        224,\n        3\n      ],\n      \"parameters\": {\n        \"key_0\": 4491.642102146007\n      }\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"datatype\": \"UINT8\",\n      \"shape\": [\n        -1,\n        224,\n        224,\n        3\n      ],\n      \"parameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": true,\n        \"key_2\": 5057,\n        \"key_3\": 4523.1098168609\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"datatype\": \"STRING\",\n      \"shape\": [\n        -1,\n        224,\n        224,\n        3\n      ],\n      \"parameters\": {\n        \"key_0\": 9655.1576433334,\n        \"key_1\": 6213.861187581254,\n        \"key_2\": true\n      }\n    }\n  ],\n  \"versions\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36ef06d3-0b4b-4a1d-b59d-eb328e85d00f",
+              "name": "Model version not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"model not found: bert-sentiment-classifier\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://inference.kserve.example.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c72bff63-d6f0-4b1b-9161-873eff649af0",
+    "name": "KServe Open Inference Protocol Health Metadata API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Open Inference Protocol (OIP), also known as the KServe V2 Inference Protocol, provides a standardized REST interface for model inference across ML serving frameworks. Implemented by KServe (CNCF incubating), NVIDIA Triton Inference Server, BentoML, TorchServe, and OpenVINO Model Server.\nThe protocol defines health, metadata, and inference endpoints for both the server and individual models. An HTTP POST to the inference endpoint submits an inference request; GET endpoints retrieve health and metadata.\nKServe is a standardized distributed generative and predictive AI inference platform for scalable, multi-framework deployment on Kubernetes.\n\nContact Support:\n Name: KServe Community",
+      "type": "text/plain"
+    }
+  }
+}

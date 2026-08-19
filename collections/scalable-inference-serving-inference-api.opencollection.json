@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KServe Open Protocol Health Inference API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Inference",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run Model Inference",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://inference.kserve.example.com/v2/models/:model_name/infer",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "bert-sentiment-classifier",
+                "type": "path",
+                "description": "Name of the model to run inference against."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit an inference request to a model. The request body contains the input tensors as JSON. Inputs are specified as an array of named tensors with shape, datatype, and data fields. The response contains the model's output tensors.\nFor large tensor payloads, the binary tensor data extension allows sending tensor data as binary in the request body alongside the JSON header."
+        },
+        {
+          "info": {
+            "name": "Run Model Version Inference",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://inference.kserve.example.com/v2/models/:model_name/versions/:model_version/infer",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "resnet50-image-classifier",
+                "type": "path"
+              },
+              {
+                "name": "model_version",
+                "value": "2",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit an inference request to a specific version of a model. Useful for A/B testing, canary rollouts, and version-pinned integrations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
