@@ -22,6 +22,17 @@ created: '2024-01-01'
 modified: '2026-05-19'
 specificationVersion: '0.23'
 tags:
+  - Artificial Intelligence
+  - CNCF
+  - Deployment
+  - Inference
+  - Kubernetes
+  - LLM
+  - Machine-Learning
+  - Model Serving
+  - MLOps
+  - Scalability
+tags_raw:
   - AI
   - CNCF
   - Deployment
@@ -44,6 +55,13 @@ apis:
   humanUrl: https://www.bentoml.com/
   baseUrl: https://api.bentoml.example.com
   tags:
+  - Batching
+  - Inference
+  - Model Serving
+  - Open-Source
+  - Python
+  - REST API
+  tags_raw:
   - Batching
   - Inference
   - Model Serving
@@ -81,6 +99,14 @@ apis:
   - KV Cache
   - LLM
   - Model Serving
+  - Open-Source
+  - OpenAI-Compatible
+  tags_raw:
+  - GPU
+  - Inference
+  - KV Cache
+  - LLM
+  - Model Serving
   - Open Source
   - OpenAI-Compatible
   properties:
@@ -107,6 +133,14 @@ apis:
   humanUrl: https://developer.nvidia.com/triton-inference-server
   baseUrl: https://triton.example.com
   tags:
+  - GPU
+  - Inference
+  - Model Serving
+  - NVIDIA
+  - Open-Source
+  - TensorRT
+  - Triton
+  tags_raw:
   - GPU
   - Inference
   - Model Serving
@@ -141,6 +175,13 @@ apis:
   baseUrl: https://mlflow.example.com/api/2.0
   tags:
   - Experiment Tracking
+  - Machine-Learning
+  - Model Registry
+  - MLOps
+  - Open-Source
+  - Versioning
+  tags_raw:
+  - Experiment Tracking
   - Machine Learning
   - Model Registry
   - MLOps
@@ -170,6 +211,14 @@ apis:
   humanUrl: https://docs.ray.io/en/latest/serve/index.html
   baseUrl: https://ray-serve.example.com
   tags:
+  - Auto-Scaling
+  - Inference
+  - Machine-Learning
+  - Model Serving
+  - Open-Source
+  - Python
+  - Ray
+  tags_raw:
   - Autoscaling
   - Inference
   - Machine Learning
