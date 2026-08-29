@@ -4,6 +4,18 @@ description: >-
   management. This includes the KServe Open Inference Protocol (the CNCF standard for model serving on Kubernetes),
   BentoML (developer packaging and serving), vLLM (high-throughput LLM inference), NVIDIA Triton Inference Server, and
   supporting observability and registry tools. KServe recently joined CNCF as an incubating project (November 2025).
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: approval
