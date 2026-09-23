@@ -1,10 +1,7 @@
 {
   "provider": "scalable-inference-serving",
   "sources": [
-    "scalable-inference-serving-health-api-openapi.yml",
-    "scalable-inference-serving-inference-api-openapi.yml",
-    "scalable-inference-serving-metadata-api-openapi.yml",
-    "scalable-inference-serving-models-api-openapi.yml"
+    "_original/kserve-open-inference-protocol-openapi.yml"
   ],
   "outputs": [
     "scalable-inference-serving-health-api-openapi.yml",
@@ -15,6 +12,15 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "kserve-open-inference-protocol-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "scalable-inference-serving-health-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "scalable-inference-serving-inference-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "scalable-inference-serving-metadata-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "scalable-inference-serving-models-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

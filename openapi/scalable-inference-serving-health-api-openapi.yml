@@ -1,11 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: KServe Open Inference Protocol Health API
-  description: 'The Open Inference Protocol (OIP), also known as the KServe V2 Inference Protocol, provides a standardized REST interface for model inference across ML serving frameworks. Implemented by KServe (CNCF incubating), NVIDIA Triton Inference Server, BentoML, TorchServe, and OpenVINO Model Server.
-
-    The protocol defines health, metadata, and inference endpoints for both the server and individual models. An HTTP POST to the inference endpoint submits an inference request; GET endpoints retrieve health and metadata.
-
-    KServe is a standardized distributed generative and predictive AI inference platform for scalable, multi-framework deployment on Kubernetes.'
+  description: The Open Inference Protocol (OIP), also known as the KServe V2 Inference Protocol, provides a standardized REST interface for model inference across ML serving frameworks.
   version: v2
   contact:
     name: KServe Community
@@ -139,6 +135,25 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      description: Error response returned when an inference or metadata request fails.
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message describing why the request failed.
+          example: 'model not found: bert-sentiment-classifier'
+    ServerLiveResponse:
+      type: object
+      description: Response from the server liveness endpoint.
+      required:
+      - live
+      properties:
+        live:
+          type: boolean
+          description: Indicates if the server is live.
     ModelReadyResponse:
       type: object
       description: Response from the model readiness endpoint.
@@ -161,22 +176,3 @@ components:
         ready:
           type: boolean
           description: Indicates if the server is ready for inference.
-    ErrorResponse:
-      type: object
-      description: Error response returned when an inference or metadata request fails.
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          description: Human-readable error message describing why the request failed.
-          example: 'model not found: bert-sentiment-classifier'
-    ServerLiveResponse:
-      type: object
-      description: Response from the server liveness endpoint.
-      required:
-      - live
-      properties:
-        live:
-          type: boolean
-          description: Indicates if the server is live.

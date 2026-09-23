@@ -1,11 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: KServe Open Inference Protocol Health Metadata API
-  description: 'The Open Inference Protocol (OIP), also known as the KServe V2 Inference Protocol, provides a standardized REST interface for model inference across ML serving frameworks. Implemented by KServe (CNCF incubating), NVIDIA Triton Inference Server, BentoML, TorchServe, and OpenVINO Model Server.
-
-    The protocol defines health, metadata, and inference endpoints for both the server and individual models. An HTTP POST to the inference endpoint submits an inference request; GET endpoints retrieve health and metadata.
-
-    KServe is a standardized distributed generative and predictive AI inference platform for scalable, multi-framework deployment on Kubernetes.'
+  title: KServe Open Inference Protocol Metadata API
+  description: The Open Inference Protocol (OIP), also known as the KServe V2 Inference Protocol, provides a standardized REST interface for model inference across ML serving frameworks.
   version: v2
   contact:
     name: KServe Community
@@ -179,16 +175,24 @@ components:
           example:
           - binary_tensor_data
           - classification
-    ErrorResponse:
-      type: object
-      description: Error response returned when an inference or metadata request fails.
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          description: Human-readable error message describing why the request failed.
-          example: 'model not found: bert-sentiment-classifier'
+    TensorDatatype:
+      type: string
+      description: Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.
+      enum:
+      - BOOL
+      - UINT8
+      - UINT16
+      - UINT32
+      - UINT64
+      - INT8
+      - INT16
+      - INT32
+      - INT64
+      - FP16
+      - FP32
+      - FP64
+      - BYTES
+      - STRING
     ModelMetadataResponse:
       type: object
       description: Metadata about a model, including its versions, platform, and input/output tensor specifications.
@@ -223,21 +227,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TensorMetadata'
-    TensorDatatype:
-      type: string
-      description: Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.
-      enum:
-      - BOOL
-      - UINT8
-      - UINT16
-      - UINT32
-      - UINT64
-      - INT8
-      - INT16
-      - INT32
-      - INT64
-      - FP16
-      - FP32
-      - FP64
-      - BYTES
-      - STRING
+    ErrorResponse:
+      type: object
+      description: Error response returned when an inference or metadata request fails.
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message describing why the request failed.
+          example: 'model not found: bert-sentiment-classifier'
