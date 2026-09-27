@@ -6,15 +6,23 @@ description: >-
   supporting observability and registry tools. KServe recently joined CNCF as an incubating project (November 2025).
 deliveryModel:
   model: saas
-  open_source: false
+  license_evidence:
+    not_product:
+    - bentoml/bentoml
+    - kserve/kserve
+    - mlflow/mlflow
+    - ray-project/ray
+    - triton-inference-server/server
+  open_source: unknown
   commercial: true
   callable_host: false
   label: Hosted service · you call their endpoint
-  confidence: medium
+  confidence: low
   source:
   - openapi
   - pricing
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: enterprise
@@ -40,7 +48,7 @@ tags:
   - Inference
   - Kubernetes
   - LLM
-  - Machine-Learning
+  - Machine Learning
   - Model Serving
   - MLOps
   - Scalability
@@ -55,6 +63,7 @@ tags_raw:
   - Model Serving
   - MLOps
   - Scalability
+  - Machine-Learning
 apis:
 - name: BentoML REST API
   description: >-
@@ -70,7 +79,7 @@ apis:
   - Batching
   - Inference
   - Model Serving
-  - Open-Source
+  - Open Source
   - Python
   - REST API
   tags_raw:
@@ -80,6 +89,7 @@ apis:
   - Open Source
   - Python
   - REST API
+  - Open-Source
   properties:
   - type: Documentation
     url: https://docs.bentoml.com/en/latest/
@@ -111,7 +121,7 @@ apis:
   - KV Cache
   - LLM
   - Model Serving
-  - Open-Source
+  - Open Source
   - OpenAI-Compatible
   tags_raw:
   - GPU
@@ -121,6 +131,7 @@ apis:
   - Model Serving
   - Open Source
   - OpenAI-Compatible
+  - Open-Source
   properties:
   - type: Documentation
     url: https://docs.vllm.ai/en/stable/
@@ -149,7 +160,7 @@ apis:
   - Inference
   - Model Serving
   - NVIDIA
-  - Open-Source
+  - Open Source
   - TensorRT
   - Triton
   tags_raw:
@@ -160,6 +171,7 @@ apis:
   - Open Source
   - TensorRT
   - Triton
+  - Open-Source
   properties:
   - type: Documentation
     url: https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/
@@ -187,10 +199,10 @@ apis:
   baseUrl: https://mlflow.example.com/api/2.0
   tags:
   - Experiment Tracking
-  - Machine-Learning
+  - Machine Learning
   - Model Registry
   - MLOps
-  - Open-Source
+  - Open Source
   - Versioning
   tags_raw:
   - Experiment Tracking
@@ -199,6 +211,8 @@ apis:
   - MLOps
   - Open Source
   - Versioning
+  - Machine-Learning
+  - Open-Source
   properties:
   - type: Documentation
     url: https://mlflow.org/docs/latest/rest-api.html
@@ -225,9 +239,9 @@ apis:
   tags:
   - Auto-Scaling
   - Inference
-  - Machine-Learning
+  - Machine Learning
   - Model Serving
-  - Open-Source
+  - Open Source
   - Python
   - Ray
   tags_raw:
@@ -238,6 +252,8 @@ apis:
   - Open Source
   - Python
   - Ray
+  - Machine-Learning
+  - Open-Source
   properties:
   - type: Documentation
     url: https://docs.ray.io/en/latest/serve/index.html

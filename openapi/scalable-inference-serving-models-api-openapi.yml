@@ -172,6 +172,37 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ModelReadyResponse:
+      type: object
+      description: Response from the model readiness endpoint.
+      required:
+      - name
+      - ready
+      properties:
+        name:
+          type: string
+          description: Name of the model.
+        ready:
+          type: boolean
+          description: Indicates if the model is ready for inference.
+    TensorDatatype:
+      type: string
+      description: Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.
+      enum:
+      - BOOL
+      - UINT8
+      - UINT16
+      - UINT32
+      - UINT64
+      - INT8
+      - INT16
+      - INT32
+      - INT64
+      - FP16
+      - FP32
+      - FP64
+      - BYTES
+      - STRING
     TensorMetadata:
       type: object
       description: Metadata describing a single input or output tensor.
@@ -199,37 +230,6 @@ components:
           type: object
           additionalProperties: true
           description: Optional tensor-specific parameters.
-    TensorDatatype:
-      type: string
-      description: Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.
-      enum:
-      - BOOL
-      - UINT8
-      - UINT16
-      - UINT32
-      - UINT64
-      - INT8
-      - INT16
-      - INT32
-      - INT64
-      - FP16
-      - FP32
-      - FP64
-      - BYTES
-      - STRING
-    ModelReadyResponse:
-      type: object
-      description: Response from the model readiness endpoint.
-      required:
-      - name
-      - ready
-      properties:
-        name:
-          type: string
-          description: Name of the model.
-        ready:
-          type: boolean
-          description: Indicates if the model is ready for inference.
     ModelMetadataResponse:
       type: object
       description: Metadata about a model, including its versions, platform, and input/output tensor specifications.

@@ -135,6 +135,19 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ModelReadyResponse:
+      type: object
+      description: Response from the model readiness endpoint.
+      required:
+      - name
+      - ready
+      properties:
+        name:
+          type: string
+          description: Name of the model.
+        ready:
+          type: boolean
+          description: Indicates if the model is ready for inference.
     ErrorResponse:
       type: object
       description: Error response returned when an inference or metadata request fails.
@@ -154,19 +167,6 @@ components:
         live:
           type: boolean
           description: Indicates if the server is live.
-    ModelReadyResponse:
-      type: object
-      description: Response from the model readiness endpoint.
-      required:
-      - name
-      - ready
-      properties:
-        name:
-          type: string
-          description: Name of the model.
-        ready:
-          type: boolean
-          description: Indicates if the model is ready for inference.
     ServerReadyResponse:
       type: object
       description: Response from the server readiness endpoint.

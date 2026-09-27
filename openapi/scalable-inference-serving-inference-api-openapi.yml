@@ -176,30 +176,67 @@ components:
           description: Optional list of output tensors to return. If omitted, all outputs are returned.
           items:
             $ref: '#/components/schemas/RequestOutput'
-    InferenceResponse:
+    TensorDatatype:
+      type: string
+      description: Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.
+      enum:
+      - BOOL
+      - UINT8
+      - UINT16
+      - UINT32
+      - UINT64
+      - INT8
+      - INT16
+      - INT32
+      - INT64
+      - FP16
+      - FP32
+      - FP64
+      - BYTES
+      - STRING
+    RequestOutput:
       type: object
-      description: Response from a successful model inference request.
+      description: Specifies which output tensor to include in the response.
       required:
-      - model_name
-      - outputs
+      - name
       properties:
-        model_name:
+        name:
           type: string
-          description: Name of the model that produced the response.
-        model_version:
-          type: string
-          description: Version of the model that produced the response.
-        id:
-          type: string
-          description: Request ID echoed from the inference request for correlation.
+          description: Name of the output tensor to include.
         parameters:
           type: object
           additionalProperties: true
-        outputs:
+    RequestInput:
+      type: object
+      description: A single input tensor for an inference request.
+      required:
+      - name
+      - shape
+      - datatype
+      - data
+      properties:
+        name:
+          type: string
+          description: Name of the input tensor (must match the model's input name).
+        shape:
           type: array
-          description: Output tensors from the inference.
           items:
-            $ref: '#/components/schemas/ResponseOutput'
+            type: integer
+          description: Shape of the input tensor.
+          example:
+          - 1
+          - 128
+        datatype:
+          $ref: '#/components/schemas/TensorDatatype'
+        parameters:
+          type: object
+          additionalProperties: true
+        data:
+          description: Tensor data in row-major order. Can be a flat array or nested arrays matching the tensor shape. Data type must match the declared datatype.
+          oneOf:
+          - type: array
+            items: {}
+          - type: string
     ErrorResponse:
       type: object
       description: Error response returned when an inference or metadata request fails.
@@ -238,64 +275,27 @@ components:
           - type: array
             items: {}
           - type: string
-    RequestInput:
+    InferenceResponse:
       type: object
-      description: A single input tensor for an inference request.
+      description: Response from a successful model inference request.
       required:
-      - name
-      - shape
-      - datatype
-      - data
+      - model_name
+      - outputs
       properties:
-        name:
+        model_name:
           type: string
-          description: Name of the input tensor (must match the model's input name).
-        shape:
+          description: Name of the model that produced the response.
+        model_version:
+          type: string
+          description: Version of the model that produced the response.
+        id:
+          type: string
+          description: Request ID echoed from the inference request for correlation.
+        parameters:
+          type: object
+          additionalProperties: true
+        outputs:
           type: array
+          description: Output tensors from the inference.
           items:
-            type: integer
-          description: Shape of the input tensor.
-          example:
-          - 1
-          - 128
-        datatype:
-          $ref: '#/components/schemas/TensorDatatype'
-        parameters:
-          type: object
-          additionalProperties: true
-        data:
-          description: Tensor data in row-major order. Can be a flat array or nested arrays matching the tensor shape. Data type must match the declared datatype.
-          oneOf:
-          - type: array
-            items: {}
-          - type: string
-    TensorDatatype:
-      type: string
-      description: Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.
-      enum:
-      - BOOL
-      - UINT8
-      - UINT16
-      - UINT32
-      - UINT64
-      - INT8
-      - INT16
-      - INT32
-      - INT64
-      - FP16
-      - FP32
-      - FP64
-      - BYTES
-      - STRING
-    RequestOutput:
-      type: object
-      description: Specifies which output tensor to include in the response.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the output tensor to include.
-        parameters:
-          type: object
-          additionalProperties: true
+            $ref: '#/components/schemas/ResponseOutput'
