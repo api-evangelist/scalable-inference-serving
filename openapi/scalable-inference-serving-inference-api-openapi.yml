@@ -151,31 +151,52 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    InferenceRequest:
+    RequestOutput:
       type: object
-      description: Request body for submitting model inference. Contains input tensors and optionally specifies which outputs to return.
+      description: Specifies which output tensor to include in the response.
       required:
-      - inputs
+      - name
       properties:
-        id:
+        name:
           type: string
-          description: Optional request identifier. If provided, it is echoed back in the response for correlation.
-          example: req-a1b2c3d4
+          description: Name of the output tensor to include.
         parameters:
           type: object
           additionalProperties: true
-          description: Optional key/value parameters passed to the model.
-        inputs:
-          type: array
-          description: Input tensors for the inference request.
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/RequestInput'
+    InferenceResponse:
+      type: object
+      description: Response from a successful model inference request.
+      required:
+      - model_name
+      - outputs
+      properties:
+        model_name:
+          type: string
+          description: Name of the model that produced the response.
+        model_version:
+          type: string
+          description: Version of the model that produced the response.
+        id:
+          type: string
+          description: Request ID echoed from the inference request for correlation.
+        parameters:
+          type: object
+          additionalProperties: true
         outputs:
           type: array
-          description: Optional list of output tensors to return. If omitted, all outputs are returned.
+          description: Output tensors from the inference.
           items:
-            $ref: '#/components/schemas/RequestOutput'
+            $ref: '#/components/schemas/ResponseOutput'
+    ErrorResponse:
+      type: object
+      description: Error response returned when an inference or metadata request fails.
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message describing why the request failed.
+          example: 'model not found: bert-sentiment-classifier'
     TensorDatatype:
       type: string
       description: Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.
@@ -194,18 +215,34 @@ components:
       - FP64
       - BYTES
       - STRING
-    RequestOutput:
+    ResponseOutput:
       type: object
-      description: Specifies which output tensor to include in the response.
+      description: A single output tensor in the inference response.
       required:
       - name
+      - shape
+      - datatype
+      - data
       properties:
         name:
           type: string
-          description: Name of the output tensor to include.
+          description: Name of the output tensor.
+        shape:
+          type: array
+          items:
+            type: integer
+          description: Shape of the output tensor.
+        datatype:
+          $ref: '#/components/schemas/TensorDatatype'
         parameters:
           type: object
           additionalProperties: true
+        data:
+          description: Output tensor data in row-major order.
+          oneOf:
+          - type: array
+            items: {}
+          - type: string
     RequestInput:
       type: object
       description: A single input tensor for an inference request.
@@ -237,65 +274,28 @@ components:
           - type: array
             items: {}
           - type: string
-    ErrorResponse:
+    InferenceRequest:
       type: object
-      description: Error response returned when an inference or metadata request fails.
+      description: Request body for submitting model inference. Contains input tensors and optionally specifies which outputs to return.
       required:
-      - error
+      - inputs
       properties:
-        error:
-          type: string
-          description: Human-readable error message describing why the request failed.
-          example: 'model not found: bert-sentiment-classifier'
-    ResponseOutput:
-      type: object
-      description: A single output tensor in the inference response.
-      required:
-      - name
-      - shape
-      - datatype
-      - data
-      properties:
-        name:
-          type: string
-          description: Name of the output tensor.
-        shape:
-          type: array
-          items:
-            type: integer
-          description: Shape of the output tensor.
-        datatype:
-          $ref: '#/components/schemas/TensorDatatype'
-        parameters:
-          type: object
-          additionalProperties: true
-        data:
-          description: Output tensor data in row-major order.
-          oneOf:
-          - type: array
-            items: {}
-          - type: string
-    InferenceResponse:
-      type: object
-      description: Response from a successful model inference request.
-      required:
-      - model_name
-      - outputs
-      properties:
-        model_name:
-          type: string
-          description: Name of the model that produced the response.
-        model_version:
-          type: string
-          description: Version of the model that produced the response.
         id:
           type: string
-          description: Request ID echoed from the inference request for correlation.
+          description: Optional request identifier. If provided, it is echoed back in the response for correlation.
+          example: req-a1b2c3d4
         parameters:
           type: object
           additionalProperties: true
+          description: Optional key/value parameters passed to the model.
+        inputs:
+          type: array
+          description: Input tensors for the inference request.
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/RequestInput'
         outputs:
           type: array
-          description: Output tensors from the inference.
+          description: Optional list of output tensors to return. If omitted, all outputs are returned.
           items:
-            $ref: '#/components/schemas/ResponseOutput'
+            $ref: '#/components/schemas/RequestOutput'
