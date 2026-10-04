@@ -341,6 +341,9 @@ apis:
   - type: SwaggerUI
     url: https://kserve.github.io/website/latest/reference/swagger-ui/
 common:
+  - type: CapabilityMap
+    url: capabilities/scalable-inference-serving-capability-edges.yml
+    name: Scalable Inference Serving Business Capability Map
   - type: AgenticAccess
     url: agentic-access/scalable-inference-serving-agentic-access.yml
   - type: Authentication
