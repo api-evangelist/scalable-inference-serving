@@ -151,42 +151,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    RequestOutput:
-      type: object
-      description: Specifies which output tensor to include in the response.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the output tensor to include.
-        parameters:
-          type: object
-          additionalProperties: true
-    InferenceResponse:
-      type: object
-      description: Response from a successful model inference request.
-      required:
-      - model_name
-      - outputs
-      properties:
-        model_name:
-          type: string
-          description: Name of the model that produced the response.
-        model_version:
-          type: string
-          description: Version of the model that produced the response.
-        id:
-          type: string
-          description: Request ID echoed from the inference request for correlation.
-        parameters:
-          type: object
-          additionalProperties: true
-        outputs:
-          type: array
-          description: Output tensors from the inference.
-          items:
-            $ref: '#/components/schemas/ResponseOutput'
     ErrorResponse:
       type: object
       description: Error response returned when an inference or metadata request fails.
@@ -197,24 +161,6 @@ components:
           type: string
           description: Human-readable error message describing why the request failed.
           example: 'model not found: bert-sentiment-classifier'
-    TensorDatatype:
-      type: string
-      description: Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.
-      enum:
-      - BOOL
-      - UINT8
-      - UINT16
-      - UINT32
-      - UINT64
-      - INT8
-      - INT16
-      - INT32
-      - INT64
-      - FP16
-      - FP32
-      - FP64
-      - BYTES
-      - STRING
     ResponseOutput:
       type: object
       description: A single output tensor in the inference response.
@@ -274,6 +220,60 @@ components:
           - type: array
             items: {}
           - type: string
+    RequestOutput:
+      type: object
+      description: Specifies which output tensor to include in the response.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the output tensor to include.
+        parameters:
+          type: object
+          additionalProperties: true
+    InferenceResponse:
+      type: object
+      description: Response from a successful model inference request.
+      required:
+      - model_name
+      - outputs
+      properties:
+        model_name:
+          type: string
+          description: Name of the model that produced the response.
+        model_version:
+          type: string
+          description: Version of the model that produced the response.
+        id:
+          type: string
+          description: Request ID echoed from the inference request for correlation.
+        parameters:
+          type: object
+          additionalProperties: true
+        outputs:
+          type: array
+          description: Output tensors from the inference.
+          items:
+            $ref: '#/components/schemas/ResponseOutput'
+    TensorDatatype:
+      type: string
+      description: Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.
+      enum:
+      - BOOL
+      - UINT8
+      - UINT16
+      - UINT32
+      - UINT64
+      - INT8
+      - INT16
+      - INT32
+      - INT64
+      - FP16
+      - FP32
+      - FP64
+      - BYTES
+      - STRING
     InferenceRequest:
       type: object
       description: Request body for submitting model inference. Contains input tensors and optionally specifies which outputs to return.

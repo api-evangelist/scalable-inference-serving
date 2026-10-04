@@ -229,24 +229,6 @@ components:
           type: string
           description: Human-readable error message describing why the request failed.
           example: 'model not found: bert-sentiment-classifier'
-    TensorDatatype:
-      type: string
-      description: Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.
-      enum:
-      - BOOL
-      - UINT8
-      - UINT16
-      - UINT32
-      - UINT64
-      - INT8
-      - INT16
-      - INT32
-      - INT64
-      - FP16
-      - FP32
-      - FP64
-      - BYTES
-      - STRING
     TensorMetadata:
       type: object
       description: Metadata describing a single input or output tensor.
@@ -274,3 +256,21 @@ components:
           type: object
           additionalProperties: true
           description: Optional tensor-specific parameters.
+    TensorDatatype:
+      type: string
+      description: Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.
+      enum:
+      - BOOL
+      - UINT8
+      - UINT16
+      - UINT32
+      - UINT64
+      - INT8
+      - INT16
+      - INT32
+      - INT64
+      - FP16
+      - FP32
+      - FP64
+      - BYTES
+      - STRING

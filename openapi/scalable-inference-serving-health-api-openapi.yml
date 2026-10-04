@@ -148,16 +148,6 @@ components:
         ready:
           type: boolean
           description: Indicates if the model is ready for inference.
-    ErrorResponse:
-      type: object
-      description: Error response returned when an inference or metadata request fails.
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          description: Human-readable error message describing why the request failed.
-          example: 'model not found: bert-sentiment-classifier'
     ServerLiveResponse:
       type: object
       description: Response from the server liveness endpoint.
@@ -176,3 +166,13 @@ components:
         ready:
           type: boolean
           description: Indicates if the server is ready for inference.
+    ErrorResponse:
+      type: object
+      description: Error response returned when an inference or metadata request fails.
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message describing why the request failed.
+          example: 'model not found: bert-sentiment-classifier'
