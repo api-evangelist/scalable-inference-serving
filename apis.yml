@@ -341,6 +341,12 @@ apis:
   - type: SwaggerUI
     url: https://kserve.github.io/website/latest/reference/swagger-ui/
 common:
+  - type: Plans
+    url: plans/scalable-inference-serving-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/scalable-inference-serving-rate-limits.yml
+  - type: FinOps
+    url: finops/scalable-inference-serving-finops.yml
   - type: CapabilityMap
     url: capabilities/scalable-inference-serving-capability-edges.yml
     name: Scalable Inference Serving Business Capability Map
