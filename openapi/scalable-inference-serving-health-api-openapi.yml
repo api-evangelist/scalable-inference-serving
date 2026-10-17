@@ -148,15 +148,6 @@ components:
         ready:
           type: boolean
           description: Indicates if the model is ready for inference.
-    ServerLiveResponse:
-      type: object
-      description: Response from the server liveness endpoint.
-      required:
-      - live
-      properties:
-        live:
-          type: boolean
-          description: Indicates if the server is live.
     ServerReadyResponse:
       type: object
       description: Response from the server readiness endpoint.
@@ -166,6 +157,15 @@ components:
         ready:
           type: boolean
           description: Indicates if the server is ready for inference.
+    ServerLiveResponse:
+      type: object
+      description: Response from the server liveness endpoint.
+      required:
+      - live
+      properties:
+        live:
+          type: boolean
+          description: Indicates if the server is live.
     ErrorResponse:
       type: object
       description: Error response returned when an inference or metadata request fails.

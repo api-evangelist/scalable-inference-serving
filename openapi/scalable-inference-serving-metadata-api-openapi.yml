@@ -124,6 +124,61 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    TensorMetadata:
+      type: object
+      description: Metadata describing a single input or output tensor.
+      required:
+      - name
+      - datatype
+      - shape
+      properties:
+        name:
+          type: string
+          description: Name of the tensor as defined by the model.
+        datatype:
+          $ref: '#/components/schemas/TensorDatatype'
+        shape:
+          type: array
+          description: Shape of the tensor. Use -1 for dynamic dimensions.
+          items:
+            type: integer
+          example:
+          - -1
+          - 224
+          - 224
+          - 3
+        parameters:
+          type: object
+          additionalProperties: true
+          description: Optional tensor-specific parameters.
+    TensorDatatype:
+      type: string
+      description: Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.
+      enum:
+      - BOOL
+      - UINT8
+      - UINT16
+      - UINT32
+      - UINT64
+      - INT8
+      - INT16
+      - INT32
+      - INT64
+      - FP16
+      - FP32
+      - FP64
+      - BYTES
+      - STRING
+    ErrorResponse:
+      type: object
+      description: Error response returned when an inference or metadata request fails.
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message describing why the request failed.
+          example: 'model not found: bert-sentiment-classifier'
     ModelMetadataResponse:
       type: object
       description: Metadata about a model, including its versions, platform, and input/output tensor specifications.
@@ -158,43 +213,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TensorMetadata'
-    ErrorResponse:
-      type: object
-      description: Error response returned when an inference or metadata request fails.
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          description: Human-readable error message describing why the request failed.
-          example: 'model not found: bert-sentiment-classifier'
-    TensorMetadata:
-      type: object
-      description: Metadata describing a single input or output tensor.
-      required:
-      - name
-      - datatype
-      - shape
-      properties:
-        name:
-          type: string
-          description: Name of the tensor as defined by the model.
-        datatype:
-          $ref: '#/components/schemas/TensorDatatype'
-        shape:
-          type: array
-          description: Shape of the tensor. Use -1 for dynamic dimensions.
-          items:
-            type: integer
-          example:
-          - -1
-          - 224
-          - 224
-          - 3
-        parameters:
-          type: object
-          additionalProperties: true
-          description: Optional tensor-specific parameters.
     ServerMetadataResponse:
       type: object
       description: Server metadata including name, version, and supported extensions.
@@ -219,21 +237,3 @@ components:
           example:
           - binary_tensor_data
           - classification
-    TensorDatatype:
-      type: string
-      description: Data type of a tensor. Follows the Open Inference Protocol datatype naming convention.
-      enum:
-      - BOOL
-      - UINT8
-      - UINT16
-      - UINT32
-      - UINT64
-      - INT8
-      - INT16
-      - INT32
-      - INT64
-      - FP16
-      - FP32
-      - FP64
-      - BYTES
-      - STRING
