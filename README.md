@@ -1,4 +1,4 @@
-# Scalable Inference Serving (scalable-inference-serving)
+# Scalable Inference Serving
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,181 +66,144 @@
 
 A collection of APIs, frameworks, and platforms for scalable machine learning model inference serving, deployment, and management. This includes the KServe Open Inference Protocol (the CNCF standard for model serving on Kubernetes), BentoML (developer packaging and serving), vLLM (high-throughput LLM inference), NVIDIA Triton Inference Server, and supporting observability and registry tools. KServe recently joined CNCF as an incubating project (November 2025).
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/refs/heads/main/apis.yml)
+**Areas:** Artificial Intelligence · CNCF · Deployment · Inference · Kubernetes · LLM · Machine Learning · Model Serving · MLOps · Scalability
 
-## Tags
+## Scalable Inference Serving on APIs.io
 
-- AI
-- CNCF
-- Deployment
-- Inference
-- Kubernetes
-- LLM
-- Machine Learning
-- Model Serving
-- MLOps
-- Scalability
+Everything profiled for Scalable Inference Serving is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/scalable-inference-serving/](https://apis.io/providers/scalable-inference-serving/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (9)
 
-- **Created:** 2024-01-01
-- **Modified:** 2026-05-19
+- [BentoML REST API](https://apis.io/apis/scalable-inference-serving/bentoml-rest-api/) — BentoML is an open-source unified inference platform for deploying and scaling AI models. It auto-generates RESTful APIs from Python service definitions,…
+- [vLLM OpenAI-Compatible API](https://apis.io/apis/scalable-inference-serving/vllm-openai-compatible-api/) — vLLM is a high-throughput and memory-efficient inference engine for LLMs, implementing PagedAttention for efficient KV cache management. vLLM exposes an…
+- [NVIDIA Triton Inference Server HTTP API](https://apis.io/apis/scalable-inference-serving/nvidia-triton-inference-server-http-api/) — NVIDIA Triton Inference Server is an open-source inference serving software that implements the KServe Open Inference Protocol (V2). Supports TensorRT,…
+- [MLflow Model Registry REST API](https://apis.io/apis/scalable-inference-serving/mlflow-model-registry-rest-api/) — MLflow is an open source platform for managing the ML lifecycle, including experiment tracking, reproducibility, and deployment. The MLflow REST API manages…
+- [Ray Serve REST API](https://apis.io/apis/scalable-inference-serving/ray-serve-rest-api/) — Ray Serve is a scalable model serving library built on Ray, designed for building online inference APIs. Supports composable deployments, autoscaling, HTTP…
+- [Scalable Inference Serving Health API](https://apis.io/apis/scalable-inference-serving/scalable-inference-serving-health-api/) — Server and model liveness and readiness probes
+- [Scalable Inference Serving Inference API](https://apis.io/apis/scalable-inference-serving/scalable-inference-serving-inference-api/) — Model inference request endpoints
+- [Scalable Inference Serving Metadata API](https://apis.io/apis/scalable-inference-serving/scalable-inference-serving-metadata-api/) — Server and model metadata endpoints
+- [Scalable Inference Serving Models API](https://apis.io/apis/scalable-inference-serving/scalable-inference-serving-models-api/) — Model management and metadata operations
 
-## APIs
+### Published properties
 
-### KServe Open Inference Protocol API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-KServe implements the Open Inference Protocol (OIP), also known as the KServe V2 Inference Protocol, which provides a standardized REST and gRPC interface for model inference across frameworks. KServe is a standardized distributed generative and predictive AI inference platform for scalable, multi-framework deployment on Kubernetes. CNCF incubating project since November 2025. Supports TensorFlow, PyTorch, scikit-learn, XGBoost, ONNX, vLLM, and HuggingFace.
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- CNCF
-- Inference
-- Kubernetes
-- Model Serving
-- Open Inference Protocol
-- Open Source
+- [Scalable Inference Serving Agentic Access](https://apis.io/agentic-access/scalable-inference-serving/scalable-inference-serving-agentic-access/)
 
-#### Properties
+#### JSON Schema (15)
 
-- [Documentation](https://kserve.github.io/website/docs/intro)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/openapi/kserve-open-inference-protocol-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Git Hub](https://github.com/kserve/kserve)
-- [Changelog](https://github.com/kserve/kserve/releases)
-- [Getting Started](https://kserve.github.io/website/docs/get_started/)
-- [Swagger U I](https://kserve.github.io/website/latest/reference/swagger-ui/)
-- [Postman Collection](collections/kserve-open-inference-protocol.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/kserve-open-inference-protocol.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+The data models the API reads and writes.
 
-### BentoML REST API
+- [Inference Request](https://apis.io/schemas/scalable-inference-serving/kserve-inference-request/)
+- [Model Metadata](https://apis.io/schemas/scalable-inference-serving/kserve-model-metadata/)
+- [ErrorResponse](https://apis.io/schemas/scalable-inference-serving/scalable-inference-serving-errorresponse/)
+- [InferenceRequest](https://apis.io/schemas/scalable-inference-serving/scalable-inference-serving-inferencerequest/)
+- [InferenceResponse](https://apis.io/schemas/scalable-inference-serving/scalable-inference-serving-inferenceresponse/)
+- [ModelMetadataResponse](https://apis.io/schemas/scalable-inference-serving/scalable-inference-serving-modelmetadataresponse/)
+- [ModelReadyResponse](https://apis.io/schemas/scalable-inference-serving/scalable-inference-serving-modelreadyresponse/)
+- [RequestInput](https://apis.io/schemas/scalable-inference-serving/scalable-inference-serving-requestinput/)
+- [RequestOutput](https://apis.io/schemas/scalable-inference-serving/scalable-inference-serving-requestoutput/)
+- [ResponseOutput](https://apis.io/schemas/scalable-inference-serving/scalable-inference-serving-responseoutput/)
+- [ServerLiveResponse](https://apis.io/schemas/scalable-inference-serving/scalable-inference-serving-serverliveresponse/)
+- [ServerMetadataResponse](https://apis.io/schemas/scalable-inference-serving/scalable-inference-serving-servermetadataresponse/)
+- [ServerReadyResponse](https://apis.io/schemas/scalable-inference-serving/scalable-inference-serving-serverreadyresponse/)
+- [TensorDatatype](https://apis.io/schemas/scalable-inference-serving/scalable-inference-serving-tensordatatype/)
+- [TensorMetadata](https://apis.io/schemas/scalable-inference-serving/scalable-inference-serving-tensormetadata/)
 
-BentoML is an open-source unified inference platform for deploying and scaling AI models. It auto-generates RESTful APIs from Python service definitions, provides built-in OpenAPI/Swagger documentation, supports adaptive batching, and integrates with KServe for Kubernetes deployment. BentoML 1.0 introduced the Runner abstraction for parallelizing inference workloads with adaptive batching and independent scaling of pre/post-processing from model inference.
+#### JSON Structure (2)
 
-#### Tags
+Data models expressed in JSON Structure.
 
-- Batching
-- Inference
-- Model Serving
-- Open Source
-- Python
-- REST API
+- [Kserve Inference Request Structure](https://apis.io/json-structure/scalable-inference-serving/kserve-inference-request-structure/)
+- [Scalable Inference Serving Structure](https://apis.io/json-structure/scalable-inference-serving/scalable-inference-serving-structure/)
 
-#### Properties
+#### JSON-LD (1)
 
-- [Documentation](https://docs.bentoml.com/en/latest/)
-- [Git Hub](https://github.com/bentoml/BentoML)
-- [Getting Started](https://docs.bentoml.com/en/latest/get-started/quickstart.html)
-- [Pricing](https://www.bentoml.com/pricing)
-- [API Reference](https://docs.bentoml.com/en/latest/reference/index.html)
-- [Postman Collection](collections/kserve-open-inference-protocol.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/kserve-open-inference-protocol.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Linked-data contexts for the provider's vocabulary.
 
-### vLLM OpenAI-Compatible API
+- [Scalable Inference Serving Context](https://apis.io/jsonld/scalable-inference-serving/scalable-inference-serving-context/)
 
-vLLM is a high-throughput and memory-efficient inference engine for LLMs, implementing PagedAttention for efficient KV cache management. vLLM exposes an OpenAI-compatible REST API allowing seamless migration from OpenAI endpoints. In 2026, vLLM integrates with KServe via LLMInferenceService and llm-d for production-grade distributed LLM inference. Powers major LLM deployments at scale.
+#### Vocabulary (1)
 
-#### Tags
+The provider's domain terms, defined.
 
-- GPU
-- Inference
-- KV Cache
-- LLM
-- Model Serving
-- Open Source
-- OpenAI-Compatible
+- [Scalable Inference Serving Vocabulary](https://apis.io/vocabularies/scalable-inference-serving/scalable-inference-serving-vocabulary/)
 
-#### Properties
+#### Examples (9)
 
-- [Documentation](https://docs.vllm.ai/en/stable/)
-- [Git Hub](https://github.com/vllm-project/vllm)
-- [API Reference](https://docs.vllm.ai/en/stable/serving/openai_compatible_server.html)
-- [Changelog](https://github.com/vllm-project/vllm/releases)
-- [Postman Collection](collections/kserve-open-inference-protocol.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/kserve-open-inference-protocol.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Example requests and responses.
 
-### NVIDIA Triton Inference Server HTTP API
+- [Kserve Check Server Liveness Example](https://apis.io/examples/scalable-inference-serving/kserve-check-server-liveness-example/)
+- [Kserve Get Model Metadata Example](https://apis.io/examples/scalable-inference-serving/kserve-get-model-metadata-example/)
+- [Kserve Run Inference Example](https://apis.io/examples/scalable-inference-serving/kserve-run-inference-example/)
+- [Scalable Inference Serving Checkmodelreadiness Example](https://apis.io/examples/scalable-inference-serving/scalable-inference-serving-checkmodelreadiness-example/)
+- [Scalable Inference Serving Checkserverliveness Example](https://apis.io/examples/scalable-inference-serving/scalable-inference-serving-checkserverliveness-example/)
+- [Scalable Inference Serving Checkserverreadiness Example](https://apis.io/examples/scalable-inference-serving/scalable-inference-serving-checkserverreadiness-example/)
+- [Scalable Inference Serving Getmodelmetadata Example](https://apis.io/examples/scalable-inference-serving/scalable-inference-serving-getmodelmetadata-example/)
+- [Scalable Inference Serving Getservermetadata Example](https://apis.io/examples/scalable-inference-serving/scalable-inference-serving-getservermetadata-example/)
+- [Scalable Inference Serving Runinference Example](https://apis.io/examples/scalable-inference-serving/scalable-inference-serving-runinference-example/)
 
-NVIDIA Triton Inference Server is an open-source inference serving software that implements the KServe Open Inference Protocol (V2). Supports TensorRT, ONNX, TensorFlow, PyTorch, and Python backends. Provides dynamic batching, model ensembles, model analyzers, and GPU/CPU inference. Used extensively in production ML pipelines requiring maximum throughput.
+#### Collections (5)
 
-#### Tags
+Postman and Open Collection request collections.
 
-- GPU
-- Inference
-- Model Serving
-- NVIDIA
-- Open Source
-- TensorRT
-- Triton
+- [KServe Open Inference Protocol API](https://apis.io/collections/scalable-inference-serving/open-kserve-open-inference-protocol/)
+- [KServe Open Inference Protocol Health API](https://apis.io/collections/scalable-inference-serving/open-scalable-inference-serving-health-api/)
+- [KServe Open Protocol Health Inference API](https://apis.io/collections/scalable-inference-serving/open-scalable-inference-serving-inference-api/)
+- [KServe Open Inference Protocol Health Metadata API](https://apis.io/collections/scalable-inference-serving/open-scalable-inference-serving-metadata-api/)
+- [KServe Open Inference Protocol Health Models API](https://apis.io/collections/scalable-inference-serving/open-scalable-inference-serving-models-api/)
 
-#### Properties
+#### Governance rules (2)
 
-- [Documentation](https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/)
-- [Git Hub](https://github.com/triton-inference-server/server)
-- [Getting Started](https://github.com/triton-inference-server/tutorials)
-- [API Reference](https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/customization_guide/inference_protocols.html)
-- [Postman Collection](collections/kserve-open-inference-protocol.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/kserve-open-inference-protocol.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Spectral rulesets for the provider's contracts.
 
-### MLflow Model Registry REST API
+- [Scalable Inference Serving — kserve open inference protocol rules](https://apis.io/rules/scalable-inference-serving/kserve-open-inference-protocol-rules/)
+- [Scalable Inference Serving — jsonschema rules](https://apis.io/rules/scalable-inference-serving/scalable-inference-serving-jsonschema-spectral-rules/)
 
-MLflow is an open source platform for managing the ML lifecycle, including experiment tracking, reproducibility, and deployment. The MLflow REST API manages experiments, runs, metrics, parameters, artifacts, and the Model Registry for versioning and staging model deployments. CNCF-adjacent; used with KServe for model lifecycle management.
+#### Plans and pricing (1)
 
-#### Tags
+Published plans, tiers and prices.
 
-- Experiment Tracking
-- Machine Learning
-- Model Registry
-- MLOps
-- Open Source
-- Versioning
+- [Scalable Inference Serving Plans Pricing](https://apis.io/plans/scalable-inference-serving/scalable-inference-serving-plans-pricing/)
 
-#### Properties
+#### Rate limits (1)
 
-- [Documentation](https://mlflow.org/docs/latest/rest-api.html)
-- [Git Hub](https://github.com/mlflow/mlflow)
-- [Getting Started](https://mlflow.org/docs/latest/getting-started/intro-quickstart/)
-- [API Reference](https://mlflow.org/docs/latest/rest-api.html)
-- [Postman Collection](collections/kserve-open-inference-protocol.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/kserve-open-inference-protocol.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Published request limits.
 
-### Ray Serve REST API
+- [Scalable Inference Serving Rate Limits](https://apis.io/rate-limits/scalable-inference-serving/scalable-inference-serving-rate-limits/)
 
-Ray Serve is a scalable model serving library built on Ray, designed for building online inference APIs. Supports composable deployments, autoscaling, HTTP ingress, gRPC, WebSockets, and request batching. Integrates with any ML framework. The Ray Serve dashboard and REST API manage deployments, replicas, routes, and application status.
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- Autoscaling
-- Inference
-- Machine Learning
-- Model Serving
-- Open Source
-- Python
-- Ray
+- [Scalable Inference Serving Finops](https://apis.io/finops/scalable-inference-serving/scalable-inference-serving-finops/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://docs.ray.io/en/latest/serve/index.html)
-- [Git Hub](https://github.com/ray-project/ray)
-- [Getting Started](https://docs.ray.io/en/latest/serve/getting_started.html)
-- [API Reference](https://docs.ray.io/en/latest/serve/api/index.html)
-- [Postman Collection](collections/kserve-open-inference-protocol.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/kserve-open-inference-protocol.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-## Common Properties
-
-- [Authentication](https://kserve.github.io/website/docs/intro)
-- [Getting Started](https://kserve.github.io/website/docs/get_started/)
-- [GitHub Organization](https://github.com/kserve)
-- [C N C F  Landscape](https://landscape.cncf.io/card-mode?project=incubating)
+- [Getting started](https://kserve.github.io/website/docs/get_started/)
 - [Blog](https://kserve.github.io/website/blog/)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/openapi/kserve-open-inference-protocol-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Spectral Ruleset](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/rules/kserve-open-inference-protocol-rules.yml)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-schema/kserve-inference-request-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-schema/kserve-model-metadata-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/json-ld/scalable-inference-serving-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/scalable-inference-serving/main/vocabulary/scalable-inference-serving-vocabulary.yml)
+- [GitHub](https://github.com/kserve)
 
-## Maintainers
+## API Evangelist rating
 
-**Email:** kin@apievangelist.com
-**URL:** https://apievangelist.com
+**Unrated** — no public website could be reached for this company, so there was almost nothing to measure and nothing a reader could check.
+
+This is not a score of zero. No rating is published for this company. If that is wrong because something public exists that we missed, say so on this repository or email [info@apievangelist.com](mailto:info@apievangelist.com) and it will be re-run — free, and no justification needed.
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Scalable Inference Serving: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/scalable-inference-serving/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
